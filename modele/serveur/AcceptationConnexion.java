@@ -1,4 +1,4 @@
-package modele.serveur2;
+package modele.serveur;
 
 import java.io.IOException;
 import java.net.ServerSocket;

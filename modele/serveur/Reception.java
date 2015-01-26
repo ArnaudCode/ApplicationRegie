@@ -1,4 +1,4 @@
-package modele.serveur2;
+package modele.serveur;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

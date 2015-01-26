@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import modele.Parametre;
-import modele.serveur2.Serveur;
+import modele.serveur.Serveur;
 import vue.Observateur;
 
 /**
