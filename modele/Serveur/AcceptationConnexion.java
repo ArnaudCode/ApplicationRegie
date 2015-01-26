@@ -1,7 +1,5 @@
 package modele.Serveur;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -13,6 +11,7 @@ public class AcceptationConnexion implements Runnable {
 
     private ServerSocket serverSocket;
     private Socket socket;
+    private Thread thread;
 
     public AcceptationConnexion(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
@@ -21,15 +20,17 @@ public class AcceptationConnexion implements Runnable {
     @Override
     public void run() {
         try {
-            while (true) {
+            while (!Thread.currentThread().isInterrupted()) {
                 socket = serverSocket.accept();
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                System.out.println("Message :");
-                System.out.println(in.readLine());
+                System.out.println("Une nouvelle connection.");
+
+                thread = new Thread(new Reception(socket));
+                thread.start();
             }
+            thread.interrupt();
+            System.out.println("Fin de connection.");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

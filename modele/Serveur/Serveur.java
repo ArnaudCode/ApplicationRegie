@@ -36,7 +36,7 @@ public class Serveur implements Observable {
             adresse = InetAddress.getLocalHost();
             etat = true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -47,7 +47,7 @@ public class Serveur implements Observable {
 
             etat = false;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
