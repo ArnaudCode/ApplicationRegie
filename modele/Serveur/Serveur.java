@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import modele.Observable;
 import modele.Parametre;
+import vue.Erreur;
 import vue.Observateur;
 
 /**
@@ -32,7 +33,7 @@ public class Serveur implements Observable {
             adresse = InetAddress.getLocalHost();
             etat = true;
         } catch (IOException e) {
-            System.err.println("Port " + serveurSocket.getLocalPort() + " deja utilise.");
+            new Erreur("Port " + serveurSocket.getLocalPort() + " deja utilise.");
         }
     }
 
@@ -44,6 +45,7 @@ public class Serveur implements Observable {
             etat = false;
         } catch (Exception e) {
             e.printStackTrace();
+            new Erreur(e.getMessage());
         }
     }
 
