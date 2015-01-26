@@ -1,4 +1,4 @@
-package modele.Serveur;
+package modele.serveur2;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,4 +32,5 @@ public class Reception implements Runnable {
             new Erreur(e.getMessage());
         }
     }
+
 }

@@ -7,23 +7,35 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import modele.Parametre;
+import modele.robot.ListeRobot;
+import modele.robot.Robot;
+import vue.Observateur;
 
 /**
  *
  * @author Arnaud
  */
-public class OngletCarte extends JPanel {
+public class OngletCarte extends JPanel implements Observateur {
+
+    private String description = null;
 
     public OngletCarte() {
         this.setPreferredSize(new Dimension(Parametre.LARGEUR, Parametre.HAUTEUR));
 
+        description = "Suivi des déplacements des robots";
+
         initialisation();
+    }
+
+    /* Getter */
+    public String getDescription() {
+        return description;
     }
 
     private void initialisation() {
         JLabel titre = new JLabel("Carte");
         titre.setFont(titre.getFont().deriveFont(Font.BOLD));
-        JLabel description = new JLabel("Suivre les déplacements des robots.");
+        JLabel texteDescription = new JLabel(description);
 
         /* Placement des composants */
         this.setLayout(new GridBagLayout());
@@ -34,7 +46,20 @@ public class OngletCarte extends JPanel {
         this.add(titre, gbc);
 
         gbc.gridy++;
-        this.add(description, gbc);
+        this.add(texteDescription, gbc);
+
+        if (!ListeRobot.getListe().isEmpty()) {
+            for (Robot robot : ListeRobot.getListe()) {
+                JLabel texteRobot = new JLabel("Robot n°" + robot.getNumero() + " : " + robot.getPositionX() + " ; " + robot.getPositionY());
+                gbc.gridy++;
+                this.add(texteRobot, gbc);
+            }
+        }
+    }
+
+    @Override
+    public void miseAJour() {
+        initialisation();
     }
 
 }

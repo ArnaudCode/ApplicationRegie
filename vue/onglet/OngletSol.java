@@ -14,16 +14,25 @@ import modele.Parametre;
  */
 public class OngletSol extends JPanel {
 
+    private String description = null;
+
     public OngletSol() {
         this.setPreferredSize(new Dimension(Parametre.LARGEUR, Parametre.HAUTEUR));
 
+        description = "Sélection du flux vidéo à projeter au sol";
+
         initialisation();
+    }
+
+    /* Getter */
+    public String getDescription() {
+        return description;
     }
 
     private void initialisation() {
         JLabel titre = new JLabel("Sol");
         titre.setFont(titre.getFont().deriveFont(Font.BOLD));
-        JLabel description = new JLabel("Sélectionner le flux vidéo à projeter au sol.");
+        JLabel texteDescription = new JLabel(description);
 
         /* Placement des composants */
         this.setLayout(new GridBagLayout());
@@ -34,7 +43,7 @@ public class OngletSol extends JPanel {
         this.add(titre, gbc);
 
         gbc.gridy++;
-        this.add(description, gbc);
+        this.add(texteDescription, gbc);
     }
 
 }

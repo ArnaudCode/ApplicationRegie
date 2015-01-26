@@ -1,5 +1,9 @@
 package vue;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import modele.Parametre;
 import vue.onglet.OngletCarte;
 import vue.onglet.OngletControle;
 import vue.onglet.OngletEcran;
@@ -7,10 +11,6 @@ import vue.onglet.OngletEditeur;
 import vue.onglet.OngletRobot;
 import vue.onglet.OngletServeur;
 import vue.onglet.OngletSol;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import modele.Parametre;
 
 /**
  *
@@ -44,13 +44,13 @@ public class Fenetre extends JFrame {
         OngletServeur ongletServeur = new OngletServeur();
         OngletSol ongletSol = new OngletSol();
 
-        barreOnglet.addTab("Serveur", ongletServeur);
-        barreOnglet.addTab("Robots", ongletRobot);
-        barreOnglet.addTab("Carte", ongletCarte);
-        barreOnglet.addTab("Ecran", ongletEcran);
-        barreOnglet.addTab("Sol", ongletSol);
-        barreOnglet.addTab("Contrôle", ongletControle);
-        barreOnglet.addTab("Editeur", ongletEditeur);
+        barreOnglet.addTab("Serveur", null, ongletServeur, ongletServeur.getDescription());
+        barreOnglet.addTab("Robots", null, ongletRobot, ongletRobot.getDescription());
+        barreOnglet.addTab("Carte", null, ongletCarte, ongletCarte.getDescription());
+        barreOnglet.addTab("Ecran", null, ongletEcran, ongletEcran.getDescription());
+        barreOnglet.addTab("Sol", null, ongletSol, ongletSol.getDescription());
+        barreOnglet.addTab("Contrôle", null, ongletControle, ongletControle.getDescription());
+        barreOnglet.addTab("Editeur", null, ongletEditeur, ongletEditeur.getDescription());
 
         panneau.add(barreOnglet);
         this.add(panneau);

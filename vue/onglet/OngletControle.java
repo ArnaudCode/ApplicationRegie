@@ -14,16 +14,25 @@ import modele.Parametre;
  */
 public class OngletControle extends JPanel {
 
+    private String description = null;
+
     public OngletControle() {
         this.setPreferredSize(new Dimension(Parametre.LARGEUR, Parametre.HAUTEUR));
 
+        description = "Réglage des paramètres du contrôle par le public";
+
         initialisation();
+    }
+
+    /* Getter */
+    public String getDescription() {
+        return description;
     }
 
     private void initialisation() {
         JLabel titre = new JLabel("Contrôle");
         titre.setFont(titre.getFont().deriveFont(Font.BOLD));
-        JLabel description = new JLabel("Régler les paramètres du contrôle par le public.");
+        JLabel texteDescription = new JLabel(description);
 
         /* Placement des composants */
         this.setLayout(new GridBagLayout());
@@ -34,7 +43,7 @@ public class OngletControle extends JPanel {
         this.add(titre, gbc);
 
         gbc.gridy++;
-        this.add(description, gbc);
+        this.add(texteDescription, gbc);
     }
 
 }

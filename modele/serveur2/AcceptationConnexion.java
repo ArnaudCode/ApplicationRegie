@@ -1,4 +1,4 @@
-package modele.Serveur;
+package modele.serveur2;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -33,4 +33,5 @@ public class AcceptationConnexion implements Runnable {
             System.out.println("Fin de connexion.");
         }
     }
+
 }

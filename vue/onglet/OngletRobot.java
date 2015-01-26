@@ -14,16 +14,25 @@ import modele.Parametre;
  */
 public class OngletRobot extends JPanel {
 
+    private String description = null;
+
     public OngletRobot() {
         this.setPreferredSize(new Dimension(Parametre.LARGEUR, Parametre.HAUTEUR));
 
+        description = "Choix du mode de déplacement des robots";
+
         initialisation();
+    }
+
+    /* Getter */
+    public String getDescription() {
+        return description;
     }
 
     private void initialisation() {
         JLabel titre = new JLabel("Robots");
         titre.setFont(titre.getFont().deriveFont(Font.BOLD));
-        JLabel description = new JLabel("Choisir le mode de déplacement des robots.");
+        JLabel texteDescription = new JLabel(description);
 
         /* Placement des composants */
         this.setLayout(new GridBagLayout());
@@ -34,7 +43,7 @@ public class OngletRobot extends JPanel {
         this.add(titre, gbc);
 
         gbc.gridy++;
-        this.add(description, gbc);
+        this.add(texteDescription, gbc);
     }
 
 }

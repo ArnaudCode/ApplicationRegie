@@ -1,4 +1,4 @@
-package modele.Serveur;
+package modele.serveur2;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -20,8 +20,8 @@ public class Serveur implements Observable {
 
     private ArrayList<Observateur> listeObservateur = new ArrayList<>();
 
-    public static boolean etat = false; //False = OFF - True = ON
-    public static InetAddress adresse = null;
+    private static boolean etat = false; //False = OFF - True = ON
+    private static InetAddress adresse = null;
 
     public Serveur() {
         try {
@@ -37,6 +37,16 @@ public class Serveur implements Observable {
         }
     }
 
+    /* Getter */
+    public static boolean getEtat() {
+        return etat;
+    }
+
+    public static InetAddress getAdresse() {
+        return adresse;
+    }
+
+    /* Fonction */
     public void stop() {
         try {
             thread.interrupt();

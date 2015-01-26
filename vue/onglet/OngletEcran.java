@@ -14,16 +14,25 @@ import modele.Parametre;
  */
 public class OngletEcran extends JPanel {
 
+    private String description = null;
+
     public OngletEcran() {
         this.setPreferredSize(new Dimension(Parametre.LARGEUR, Parametre.HAUTEUR));
 
+        description = "Réglage des paramètres du contrôle par le public";
+
         initialisation();
+    }
+
+    /* Getter */
+    public String getDescription() {
+        return description;
     }
 
     private void initialisation() {
         JLabel titre = new JLabel("Ecran");
         titre.setFont(titre.getFont().deriveFont(Font.BOLD));
-        JLabel description = new JLabel("Sélectionner le flux vidéo à projeter sur l'écran.");
+        JLabel texteDescription = new JLabel(description);
 
         /* Placement des composants */
         this.setLayout(new GridBagLayout());
@@ -34,7 +43,7 @@ public class OngletEcran extends JPanel {
         this.add(titre, gbc);
 
         gbc.gridy++;
-        this.add(description, gbc);
+        this.add(texteDescription, gbc);
     }
 
 }

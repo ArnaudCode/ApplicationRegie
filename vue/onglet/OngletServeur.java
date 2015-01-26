@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import modele.Parametre;
-import modele.Serveur.Serveur;
+import modele.serveur2.Serveur;
 import vue.Observateur;
 
 /**
@@ -20,25 +20,32 @@ import vue.Observateur;
  */
 public class OngletServeur extends JPanel implements Observateur {
 
+    private String description = null;
     private Serveur serveur;
 
     public OngletServeur() {
         this.setPreferredSize(new Dimension(Parametre.LARGEUR, Parametre.HAUTEUR));
 
+        description = "Gestion des connexions entre les modules";
         this.serveur = null;
 
         initialisation();
     }
 
+    /* Getter */
+    public String getDescription() {
+        return description;
+    }
+
     private void initialisation() {
         JLabel titre = new JLabel("Serveur");
         titre.setFont(titre.getFont().deriveFont(Font.BOLD));
-        JLabel description = new JLabel("Gestion des connexions entre les modules.");
+        JLabel texteDescription = new JLabel(description);
 
         JButton bouton = null;
         JLabel statut = null;
         JLabel adresseIP = null;
-        if (Serveur.etat == false) {
+        if (Serveur.getEtat() == false) {
             bouton = new JButton("Lancer");
             statut = new JLabel(" OFF");
             statut.setFont(statut.getFont().deriveFont(Font.BOLD));
@@ -50,10 +57,10 @@ public class OngletServeur extends JPanel implements Observateur {
             statut.setForeground(Color.GREEN);
         }
 
-        if (Serveur.adresse == null) {
+        if (Serveur.getAdresse() == null) {
             adresseIP = new JLabel("xxx.xxx.xxx.xxx" + ":" + Parametre.SERVEUR_PORT + " (x)");
         } else {
-            adresseIP = new JLabel(Serveur.adresse.getHostAddress() + ":" + Parametre.SERVEUR_PORT + " (" + Serveur.adresse.getHostName() + ")");
+            adresseIP = new JLabel(Serveur.getAdresse().getHostAddress() + ":" + Parametre.SERVEUR_PORT + " (" + Serveur.getAdresse().getHostName() + ")");
         }
 
         /* Placement des composants */
@@ -65,7 +72,7 @@ public class OngletServeur extends JPanel implements Observateur {
         this.add(titre, gbc);
 
         gbc.gridy++;
-        this.add(description, gbc);
+        this.add(texteDescription, gbc);
 
         gbc.weighty = 2;
         gbc.gridy++;
@@ -102,4 +109,5 @@ public class OngletServeur extends JPanel implements Observateur {
         initialisation();
         this.updateUI();
     }
+
 }
