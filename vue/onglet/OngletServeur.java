@@ -41,17 +41,19 @@ public class OngletServeur extends JPanel implements Observateur {
         if (Serveur.etat == false) {
             bouton = new JButton("Lancer");
             statut = new JLabel(" OFF");
+            statut.setFont(statut.getFont().deriveFont(Font.BOLD));
             statut.setForeground(Color.RED);
         } else {
             bouton = new JButton("Arrêter");
             statut = new JLabel(" ON");
+            statut.setFont(statut.getFont().deriveFont(Font.BOLD));
             statut.setForeground(Color.GREEN);
         }
 
         if (Serveur.adresse == null) {
-            adresseIP = new JLabel("XXX.XXX.XXX.XXX" + ":" + Parametre.SERVEUR_PORT);
+            adresseIP = new JLabel("XXX.XXX.XXX.XXX" + ":" + Parametre.SERVEUR_PORT + " (X)");
         } else {
-            adresseIP = new JLabel(Serveur.adresse.getHostAddress() + ":" + Parametre.SERVEUR_PORT);
+            adresseIP = new JLabel(Serveur.adresse.getHostAddress() + ":" + Parametre.SERVEUR_PORT + " (" + Serveur.adresse.getHostName() + ")");
         }
 
         /* Placement des composants */
