@@ -88,6 +88,7 @@ public class OngletServeur extends JPanel implements Observateur {
                 } else {
                     serveur.stop();
                     serveur.notification();
+                    serveur = null;
                 }
             }
         });

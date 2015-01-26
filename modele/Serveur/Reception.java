@@ -10,7 +10,7 @@ import java.net.Socket;
  */
 public class Reception implements Runnable {
 
-    private Socket socket;
+    private Socket socket = null;
 
     public Reception(Socket socket) {
         this.socket = socket;
@@ -20,14 +20,12 @@ public class Reception implements Runnable {
     public void run() {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String ligne;
-            while (!Thread.currentThread().isInterrupted() && !socket.isClosed()) {
-                if ((ligne = in.readLine()) != null) {
-                    System.out.println(ligne);
-                }
+            String ligne = null;
+            while (!Thread.currentThread().isInterrupted() && (ligne = in.readLine()) != null) {
+                System.out.println(ligne);
             }
             socket.close();
-            System.out.println("Fin reception");
+            System.out.println("Fin de reception.");
         } catch (Exception e) {
             e.printStackTrace();
         }

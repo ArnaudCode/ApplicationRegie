@@ -1,5 +1,6 @@
 package modele.Serveur;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -9,9 +10,9 @@ import java.net.Socket;
  */
 public class AcceptationConnexion implements Runnable {
 
-    private ServerSocket serverSocket;
-    private Socket socket;
-    private Thread thread;
+    private ServerSocket serverSocket = null;
+    private Socket socket = null;
+    private Thread thread = null;
 
     public AcceptationConnexion(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
@@ -28,9 +29,8 @@ public class AcceptationConnexion implements Runnable {
                 thread.start();
             }
             thread.interrupt();
+        } catch (IOException e) {
             System.out.println("Fin de connection.");
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

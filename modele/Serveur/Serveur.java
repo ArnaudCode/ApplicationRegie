@@ -1,5 +1,6 @@
 package modele.Serveur;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
@@ -13,20 +14,15 @@ import vue.Observateur;
  */
 public class Serveur implements Observable {
 
-    private ServerSocket serveurSocket;
-    private Thread thread;
+    private ServerSocket serveurSocket = null;
+    private Thread thread = null;
 
-    private ArrayList<Observateur> listeObservateur;
+    private ArrayList<Observateur> listeObservateur = new ArrayList<>();
 
     public static boolean etat = false; //False = OFF - True = ON
     public static InetAddress adresse = null;
 
     public Serveur() {
-        listeObservateur = new ArrayList<>();
-
-        serveurSocket = null;
-        thread = null;
-
         try {
             serveurSocket = new ServerSocket(Parametre.SERVEUR_PORT);
 
@@ -35,8 +31,8 @@ public class Serveur implements Observable {
 
             adresse = InetAddress.getLocalHost();
             etat = true;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("Port " + serveurSocket.getLocalPort() + " deja utilise.");
         }
     }
 
