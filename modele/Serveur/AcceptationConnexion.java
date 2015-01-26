@@ -30,7 +30,7 @@ public class AcceptationConnexion implements Runnable {
             }
             thread.interrupt();
         } catch (IOException e) {
-            System.out.println("Fin de connection.");
+            System.out.println("Fin de connexion.");
         }
     }
 }

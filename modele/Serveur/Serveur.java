@@ -33,7 +33,7 @@ public class Serveur implements Observable {
             adresse = InetAddress.getLocalHost();
             etat = true;
         } catch (IOException e) {
-            new Erreur("Port " + serveurSocket.getLocalPort() + " deja utilise.");
+            new Erreur("Port " + Parametre.SERVEUR_PORT + " déjà utilisé.");
         }
     }
 
