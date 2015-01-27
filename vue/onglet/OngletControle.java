@@ -5,14 +5,18 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import modele.Parametre;
+import modele.applicationpublic.ListePublic;
+import vue.Observateur;
 
 /**
  *
  * @author Arnaud
  */
-public class OngletControle extends JPanel {
+public class OngletControle extends JPanel implements Observateur {
 
     private String description = null;
 
@@ -22,6 +26,8 @@ public class OngletControle extends JPanel {
         description = "Réglage des paramètres du contrôle par le public";
 
         initialisation();
+
+        ListePublic.ajouterObservateur(this);
     }
 
     /* Getter */
@@ -44,6 +50,28 @@ public class OngletControle extends JPanel {
 
         gbc.gridy++;
         this.add(texteDescription, gbc);
+
+        if (!ListePublic.getListe().isEmpty()) {
+            String listePublic[] = new String[ListePublic.getListe().size()];
+
+            for (int i = 0; i < ListePublic.getListe().size(); i++) {
+                listePublic[i] = (i + 1) + " - " + ListePublic.getListe().get(i).getAdresseIP().toString().substring(1);
+            }
+
+            JList jlist = new JList(listePublic);
+            JScrollPane jscollbar = new JScrollPane(jlist);
+            jscollbar.setPreferredSize(new Dimension(200, 300));
+
+            gbc.gridy++;
+            this.add(jscollbar, gbc);
+        }
+    }
+
+    @Override
+    public void miseAJour() {
+        this.removeAll();
+        initialisation();
+        this.updateUI();
     }
 
 }

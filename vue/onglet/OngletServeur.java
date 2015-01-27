@@ -91,7 +91,7 @@ public class OngletServeur extends JPanel implements Observateur {
         bouton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (serveur == null) {
+                if (serveur == null || Serveur.getEtat() == false) {
                     serveur = new Serveur();
                     serveur.ajouterObservateur(ongletServeur);
                 } else {

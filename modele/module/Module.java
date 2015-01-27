@@ -1,5 +1,6 @@
 package modele.module;
 
+import java.net.SocketAddress;
 import org.json.JSONObject;
 
 /**
@@ -10,9 +11,12 @@ public class Module {
 
     private String requete = null;
     private JSONObject json = null;
+    private SocketAddress adresseIP = null;
 
-    public Module(String requete) {
+    public Module(String requete, SocketAddress adresseIP) {
         this.requete = requete;
+        this.adresseIP = adresseIP;
+
         json = new JSONObject(requete);
 
         switch (json.get("idModule").toString()) {
@@ -21,6 +25,7 @@ public class Module {
                 break;
 
             case "public":
+                new ModulePublic(json, adresseIP);
                 break;
 
             default:
