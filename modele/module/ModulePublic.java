@@ -9,10 +9,11 @@ import org.json.JSONObject;
  *
  * @author Arnaud
  */
-public class ModulePublic {
+public class ModulePublic extends Module {
 
     private JSONObject json = null;
     private SocketAddress adresseIP = null;
+    private Public applicationpublic = null;
 
     public ModulePublic(JSONObject json, SocketAddress adresseIP) {
         this.json = json;
@@ -26,9 +27,16 @@ public class ModulePublic {
         }
 
         if (dejaPresent == false) {
-            ListePublic.getListe().add(new Public(adresseIP));
+            applicationpublic = new Public(adresseIP);
+            ListePublic.getListe().add(applicationpublic);
         }
 
+        ListePublic.notification();
+    }
+
+    @Override
+    public void stop() {
+        ListePublic.getListe().remove(applicationpublic);
         ListePublic.notification();
     }
 

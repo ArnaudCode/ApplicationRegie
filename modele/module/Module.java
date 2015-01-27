@@ -7,31 +7,25 @@ import org.json.JSONObject;
  *
  * @author Arnaud
  */
-public class Module {
+public abstract class Module {
 
-    private String requete = null;
-    private JSONObject json = null;
-    private SocketAddress adresseIP = null;
-
-    public Module(String requete, SocketAddress adresseIP) {
-        this.requete = requete;
-        this.adresseIP = adresseIP;
-
-        json = new JSONObject(requete);
+    public static Module DetectionModule(String requete, SocketAddress adresseIP) {
+        JSONObject json = new JSONObject(requete);
 
         switch (json.get("idModule").toString()) {
             case "localisation":
-                new ModuleLocalisation(json);
-                break;
+                return new ModuleLocalisation(json);
 
             case "public":
-                new ModulePublic(json, adresseIP);
-                break;
+                return new ModulePublic(json, adresseIP);
 
             default:
                 System.out.println("idModule non reconnu : " + json.get("idModule").toString());
                 break;
         }
+
+        return null;
     }
 
+    public abstract void stop();
 }

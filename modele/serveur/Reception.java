@@ -13,6 +13,7 @@ import vue.Erreur;
 public class Reception implements Runnable {
 
     private Socket socket = null;
+    private Module module = null;
 
     public Reception(Socket socket) {
         this.socket = socket;
@@ -25,9 +26,10 @@ public class Reception implements Runnable {
             String ligne = null;
             while (!Thread.currentThread().isInterrupted() && (ligne = in.readLine()) != null) {
                 System.out.println(ligne);
-                new Module(ligne, socket.getRemoteSocketAddress());
+                module = Module.DetectionModule(ligne, socket.getRemoteSocketAddress());
             }
 
+            module.stop();
             socket.close();
             System.out.println("Fin de reception.");
         } catch (Exception e) {

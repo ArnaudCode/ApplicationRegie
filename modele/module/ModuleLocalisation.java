@@ -9,7 +9,7 @@ import org.json.JSONObject;
  *
  * @author Arnaud
  */
-public class ModuleLocalisation {
+public class ModuleLocalisation extends Module {
 
     private JSONObject json = null;
 
@@ -29,5 +29,9 @@ public class ModuleLocalisation {
         }
 
         ListeRobot.notification();
+    }
+
+    @Override
+    public void stop() {
     }
 }
