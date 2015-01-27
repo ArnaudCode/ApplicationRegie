@@ -3,6 +3,7 @@ package modele.serveur;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import modele.module.Module;
 import vue.Erreur;
 
 /**
@@ -24,7 +25,9 @@ public class Reception implements Runnable {
             String ligne = null;
             while (!Thread.currentThread().isInterrupted() && (ligne = in.readLine()) != null) {
                 System.out.println(ligne);
+                new Module(ligne);
             }
+
             socket.close();
             System.out.println("Fin de reception.");
         } catch (Exception e) {

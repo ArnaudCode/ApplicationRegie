@@ -25,6 +25,8 @@ public class OngletCarte extends JPanel implements Observateur {
         description = "Suivi des déplacements des robots";
 
         initialisation();
+
+        ListeRobot.ajouterObservateur(this);
     }
 
     /* Getter */
@@ -50,7 +52,7 @@ public class OngletCarte extends JPanel implements Observateur {
 
         if (!ListeRobot.getListe().isEmpty()) {
             for (Robot robot : ListeRobot.getListe()) {
-                JLabel texteRobot = new JLabel("Robot n°" + robot.getNumero() + " : " + robot.getPositionX() + " ; " + robot.getPositionY());
+                JLabel texteRobot = new JLabel("Robot n° " + robot.getNumero() + " : (" + robot.getPositionX() + " ; " + robot.getPositionY() + ")");
                 gbc.gridy++;
                 this.add(texteRobot, gbc);
             }
@@ -59,7 +61,9 @@ public class OngletCarte extends JPanel implements Observateur {
 
     @Override
     public void miseAJour() {
+        this.removeAll();
         initialisation();
+        this.updateUI();
     }
 
 }
