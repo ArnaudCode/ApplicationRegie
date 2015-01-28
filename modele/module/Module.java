@@ -17,7 +17,7 @@ public abstract class Module {
 
             switch (json.get("idModule").toString()) {
                 case "localisation":
-                    return new ModuleLocalisation(json);
+                    return new ModuleLocalisation(json, socket);
 
                 case "public":
                     return new ModulePublic(json, socket);
