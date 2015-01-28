@@ -4,7 +4,6 @@ import java.net.Socket;
 import modele.applicationpublic.ListePublic;
 import modele.applicationpublic.Public;
 import org.json.JSONObject;
-import vue.Erreur;
 
 /**
  *
@@ -34,9 +33,6 @@ public class ModulePublic extends Module {
 
             /* Emision */
             ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
-        } else {
-            new Erreur("IP de l'application public déjà existante");
-            ListePublic.notification();
         }
 
         ListePublic.notification();
