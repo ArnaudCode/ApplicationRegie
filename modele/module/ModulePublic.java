@@ -3,7 +3,6 @@ package modele.module;
 import java.net.Socket;
 import modele.applicationpublic.ListePublic;
 import modele.applicationpublic.Public;
-import modele.serveur.Emission;
 import org.json.JSONObject;
 
 /**
@@ -33,9 +32,7 @@ public class ModulePublic extends Module {
             ListePublic.getListe().add(applicationpublic);
 
             /* Emision */
-            JSONObject confirmation = new JSONObject();
-            confirmation.put("attente", true);
-            new Emission(socket, confirmation.toString());
+            ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
         }
 
         ListePublic.notification();

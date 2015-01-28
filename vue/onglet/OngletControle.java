@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -51,6 +53,7 @@ public class OngletControle extends JPanel implements Observateur {
         gbc.gridy++;
         this.add(texteDescription, gbc);
 
+        JList jlist = null;
         if (!ListePublic.getListe().isEmpty()) {
             String listePublic[] = new String[ListePublic.getListe().size()];
 
@@ -58,13 +61,27 @@ public class OngletControle extends JPanel implements Observateur {
                 listePublic[i] = (i + 1) + " - " + ListePublic.getListe().get(i).getAdresseIP().toString().substring(1);
             }
 
-            JList jlist = new JList(listePublic);
-            JScrollPane jscollbar = new JScrollPane(jlist);
-            jscollbar.setPreferredSize(new Dimension(200, 300));
-
-            gbc.gridy++;
-            this.add(jscollbar, gbc);
+            jlist = new JList(listePublic);
+        } else {
+            jlist = new JList();
         }
+        JScrollPane jscollbar = new JScrollPane(jlist);
+        jscollbar.setPreferredSize(new Dimension(200, 300));
+
+        gbc.gridy++;
+        this.add(jscollbar, gbc);
+
+        jlist.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                JList liste = (JList) evt.getSource();
+                if (evt.getClickCount() == 2) {
+                    int index = liste.locationToIndex(evt.getPoint());
+
+                    ListePublic.getListe().get(index).setAttente(!ListePublic.getListe().get(index).isAttente());
+                }
+            }
+        });
     }
 
     @Override
