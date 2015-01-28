@@ -1,6 +1,6 @@
 package modele.module;
 
-import java.net.SocketAddress;
+import java.net.Socket;
 import org.json.JSONObject;
 
 /**
@@ -9,7 +9,7 @@ import org.json.JSONObject;
  */
 public abstract class Module {
 
-    public static Module DetectionModule(String requete, SocketAddress adresseIP) {
+    public static Module DetectionModule(String requete, Socket socket) {
         JSONObject json = new JSONObject(requete);
 
         switch (json.get("idModule").toString()) {
@@ -17,7 +17,7 @@ public abstract class Module {
                 return new ModuleLocalisation(json);
 
             case "public":
-                return new ModulePublic(json, adresseIP);
+                return new ModulePublic(json, socket);
 
             default:
                 System.out.println("idModule non reconnu : " + json.get("idModule").toString());

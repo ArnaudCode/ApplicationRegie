@@ -26,7 +26,7 @@ public class Reception implements Runnable {
             String ligne = null;
             while (!Thread.currentThread().isInterrupted() && (ligne = in.readLine()) != null) {
                 System.out.println(ligne);
-                module = Module.DetectionModule(ligne, socket.getRemoteSocketAddress());
+                module = Module.DetectionModule(ligne, socket);
             }
 
             module.stop();

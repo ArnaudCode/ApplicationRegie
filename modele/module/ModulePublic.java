@@ -1,8 +1,9 @@
 package modele.module;
 
-import java.net.SocketAddress;
+import java.net.Socket;
 import modele.applicationpublic.ListePublic;
 import modele.applicationpublic.Public;
+import modele.serveur.Emission;
 import org.json.JSONObject;
 
 /**
@@ -12,23 +13,29 @@ import org.json.JSONObject;
 public class ModulePublic extends Module {
 
     private JSONObject json = null;
-    private SocketAddress adresseIP = null;
+    private Socket socket = null;
     private Public applicationpublic = null;
 
-    public ModulePublic(JSONObject json, SocketAddress adresseIP) {
+    public ModulePublic(JSONObject json, Socket socket) {
         this.json = json;
-        this.adresseIP = adresseIP;
+        this.socket = socket;
 
+        /* Réception */
         boolean dejaPresent = false;
         for (Public p : ListePublic.getListe()) {
-            if (p.getAdresseIP() == adresseIP) {
+            if (p.getAdresseIP() == socket.getRemoteSocketAddress()) {
                 dejaPresent = true;
             }
         }
 
         if (dejaPresent == false) {
-            applicationpublic = new Public(adresseIP);
+            applicationpublic = new Public(socket);
             ListePublic.getListe().add(applicationpublic);
+
+            /* Emision */
+            JSONObject confirmation = new JSONObject();
+            confirmation.put("attente", true);
+            new Emission(socket, confirmation.toString());
         }
 
         ListePublic.notification();

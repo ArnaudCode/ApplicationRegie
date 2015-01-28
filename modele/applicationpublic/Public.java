@@ -1,5 +1,6 @@
 package modele.applicationpublic;
 
+import java.net.Socket;
 import java.net.SocketAddress;
 
 /**
@@ -8,16 +9,16 @@ import java.net.SocketAddress;
  */
 public class Public {
 
-    private SocketAddress adresseIP = null;
+    private Socket socket = null;
     private boolean attente = true;
 
-    public Public(SocketAddress adresseIP) {
-        this.adresseIP = adresseIP;
+    public Public(Socket socket) {
+        this.socket = socket;
     }
 
     /* Getter */
     public SocketAddress getAdresseIP() {
-        return adresseIP;
+        return socket.getRemoteSocketAddress();
     }
 
     public boolean isAttente() {
@@ -25,10 +26,6 @@ public class Public {
     }
 
     /*Setter */
-    public void setAdresseIP(SocketAddress adresseIP) {
-        this.adresseIP = adresseIP;
-    }
-
     public void setAttente(boolean attente) {
         this.attente = attente;
     }
