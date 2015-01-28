@@ -69,7 +69,7 @@ public class OngletControle extends JPanel implements Observateur {
             jlist = new JList();
         }
         JScrollPane jscollbar = new JScrollPane(jlist);
-        jscollbar.setPreferredSize(new Dimension(200, 300));
+        jscollbar.setPreferredSize(new Dimension(200, 350));
 
         gbc.gridy++;
         this.add(jscollbar, gbc);

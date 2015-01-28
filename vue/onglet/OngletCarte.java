@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import modele.Parametre;
@@ -52,10 +51,6 @@ public class OngletCarte extends JPanel implements Observateur {
 
         gbc.gridy++;
         this.add(new DessinCarte(), gbc);
-
-        JButton calbrage = new JButton("Calibrer");
-        gbc.gridx++;
-        this.add(calbrage, gbc);
     }
 
     @Override

@@ -70,10 +70,22 @@ public class DessinCarte extends JPanel {
 
                         switch (robot.getNumero()) {
                             case 0:
-                                g.setColor(Color.red);
+                                g.setColor(Color.RED);
                                 break;
                             case 1:
                                 g.setColor(Color.BLUE);
+                                break;
+                            case 2:
+                                g.setColor(Color.GREEN);
+                                break;
+                            case 3:
+                                g.setColor(Color.YELLOW);
+                                break;
+                            case 4:
+                                g.setColor(Color.PINK);
+                                break;
+                            default:
+                                g.setColor(Color.WHITE);
                                 break;
                         }
                         dessiner_croix(g, x1, y1);

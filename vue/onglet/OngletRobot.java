@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import modele.Parametre;
 
 /**
@@ -44,6 +46,25 @@ public class OngletRobot extends JPanel {
 
         gbc.gridy++;
         this.add(texteDescription, gbc);
+
+        JLabel distanceCalibrage = new JLabel("Distance de calibrage : ");
+        gbc.gridy++;
+        this.add(distanceCalibrage, gbc);
+
+        JSpinner valeurCalibrage = new JSpinner();
+        valeurCalibrage.setValue(100);
+        valeurCalibrage.setPreferredSize(new Dimension(50, 25));
+        gbc.gridx++;
+        this.add(valeurCalibrage, gbc);
+
+        JLabel uniteCalibrage = new JLabel(" centimètres");
+        gbc.gridx++;
+        this.add(uniteCalibrage, gbc);
+
+        JButton calbrage = new JButton("Calibrer");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        this.add(calbrage, gbc);
     }
 
 }
