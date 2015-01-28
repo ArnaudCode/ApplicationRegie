@@ -23,7 +23,7 @@ public class AcceptationConnexion implements Runnable {
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 socket = serverSocket.accept();
-                System.out.println("Une nouvelle connection.");
+                System.out.println("Une nouvelle connexion.");
 
                 thread = new Thread(new Reception(socket));
                 thread.start();

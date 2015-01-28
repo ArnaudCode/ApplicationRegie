@@ -18,10 +18,24 @@ import modele.robot.Robot;
  */
 public class DessinCarte extends JPanel {
 
-    ArrayList<ArrayList<Position>> listePosition = new ArrayList<>(); //Liste positions par robot dans le temps
+    public static ArrayList<ArrayList<Position>> listePosition = new ArrayList<>(); //Liste positions par robot dans le temps
 
     public DessinCarte() {
         super();
+
+        if (!ListeRobot.getListe().isEmpty()) {
+            if (ListeRobot.getListe().size() > listePosition.size()) {
+                for (int i = 0; i < ListeRobot.getListe().size(); i++) {
+                    listePosition.add(new ArrayList<>());
+                }
+            }
+            for (Robot robot : ListeRobot.getListe()) {
+                if (listePosition.get(robot.getNumero()).size() > 5) {
+                    listePosition.get(robot.getNumero()).remove(0);
+                }
+                listePosition.get(robot.getNumero()).add(new Position((int) robot.getPositionX(), (int) robot.getPositionY()));
+            }
+        }
     }
 
     @Override
