@@ -1,7 +1,6 @@
 package modele.applicationpublic;
 
 import java.net.Socket;
-import java.net.SocketAddress;
 import modele.serveur.Emission;
 import org.json.JSONObject;
 
@@ -19,8 +18,8 @@ public class Public {
     }
 
     /* Getter */
-    public SocketAddress getAdresseIP() {
-        return socket.getRemoteSocketAddress();
+    public String getAdresseIP() {
+        return socket.getInetAddress().getHostAddress();
     }
 
     public boolean isAttente() {

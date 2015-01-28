@@ -28,13 +28,13 @@ public class DessinCarte extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         int rayon_centimetre = 250;
-        int rayon_pixel = Parametre.HAUTEUR / 2 - 10;
+        int rayon_pixel = (Parametre.HAUTEUR - 100) / 2 - 10;
 
         int square_centimetre = 25;
         int square_pixel = square_centimetre * rayon_pixel / rayon_centimetre;
 
-        int x_cercle = Parametre.LARGEUR / 2 - rayon_pixel;
-        int y_cercle = Parametre.HAUTEUR / 2 - rayon_pixel;
+        int x_cercle = (Parametre.LARGEUR - 100) / 2 - rayon_pixel;
+        int y_cercle = (Parametre.HAUTEUR - 100) / 2 - rayon_pixel;
 
         g.drawOval(x_cercle, y_cercle, 2 * rayon_pixel, 2 * rayon_pixel);
 

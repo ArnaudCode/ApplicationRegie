@@ -53,6 +53,7 @@ public class Fenetre extends JFrame {
         barreOnglet.addTab("Editeur", null, ongletEditeur, ongletEditeur.getDescription());
 
         panneau.add(barreOnglet);
-        this.add(panneau);
+
+        this.setContentPane(panneau);
     }
 }

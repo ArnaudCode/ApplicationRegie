@@ -61,7 +61,7 @@ public class OngletControle extends JPanel implements Observateur {
             String listePublic[] = new String[ListePublic.getListe().size()];
 
             for (int i = 0; i < ListePublic.getListe().size(); i++) {
-                listePublic[i] = (i + 1) + " - " + ListePublic.getListe().get(i).getAdresseIP().toString().substring(1);
+                listePublic[i] = (i + 1) + " - " + ListePublic.getListe().get(i).getAdresseIP().toString();
             }
 
             jlist = new JList(listePublic);

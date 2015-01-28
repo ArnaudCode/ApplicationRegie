@@ -1,9 +1,13 @@
 package modele.module;
 
+import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modele.applicationpublic.ListePublic;
 import modele.applicationpublic.Public;
 import org.json.JSONObject;
+import vue.Erreur;
 
 /**
  *
@@ -22,7 +26,7 @@ public class ModulePublic extends Module {
         /* Réception */
         boolean dejaPresent = false;
         for (Public p : ListePublic.getListe()) {
-            if (p.getAdresseIP() == socket.getRemoteSocketAddress()) {
+            if (p.getAdresseIP().equals(socket.getInetAddress().getHostAddress())) {
                 dejaPresent = true;
             }
         }
@@ -33,6 +37,13 @@ public class ModulePublic extends Module {
 
             /* Emision */
             ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
+        } else {
+            try {
+                new Erreur("IP de l'application public déjà existante");
+                socket.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ModulePublic.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         ListePublic.notification();
