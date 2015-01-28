@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import modele.module.Module;
-import vue.Erreur;
 
 /**
  *
@@ -34,7 +33,7 @@ public class Reception implements Runnable {
             System.out.println("Fin de reception.");
         } catch (Exception e) {
             e.printStackTrace();
-            new Erreur(e.getMessage());
+            module.stop();
         }
     }
 
