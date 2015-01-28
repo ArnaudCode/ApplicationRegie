@@ -15,4 +15,7 @@ public class Parametre {
 
     /* Configuration du serveur */
     public static final int SERVEUR_PORT = 3000;
+
+    /* COnfiguration contrôle */
+    public static final int NOMBRE_SECONDE_ATTENTE = 10;
 }

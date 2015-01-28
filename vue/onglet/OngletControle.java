@@ -11,6 +11,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import modele.Parametre;
 import modele.applicationpublic.ListePublic;
 import vue.Observateur;
@@ -77,6 +79,7 @@ public class OngletControle extends JPanel implements Observateur {
         this.add(secondeAttente, gbc);
 
         JSpinner spinner = new JSpinner();
+        spinner.setValue(Parametre.NOMBRE_SECONDE_ATTENTE);
         spinner.setPreferredSize(new Dimension(40, 25));
         gbc.gridx++;
         this.add(spinner, gbc);
@@ -91,6 +94,13 @@ public class OngletControle extends JPanel implements Observateur {
 
                     ListePublic.getListe().get(index).setAttente(!ListePublic.getListe().get(index).isAttente());
                 }
+            }
+        });
+
+        spinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ListePublic.setNombreSecondeAttente((int) ((JSpinner) e.getSource()).getValue());
             }
         });
     }

@@ -1,6 +1,7 @@
 package modele.applicationpublic;
 
 import java.util.ArrayList;
+import modele.Parametre;
 import vue.Observateur;
 
 /**
@@ -10,19 +11,30 @@ import vue.Observateur;
 public class ListePublic {
 
     private static ArrayList<Public> liste = new ArrayList<Public>();
+    private static int nombreSecondeAttente = Parametre.NOMBRE_SECONDE_ATTENTE;
 
     private static ArrayList<Observateur> listeObservateur = new ArrayList<>();
 
     private ListePublic() {
     }
 
+    /* Getter */
+    public static ArrayList<Public> getListe() {
+        return liste;
+    }
+
+    public static int getNombreSecondeAttente() {
+        return nombreSecondeAttente;
+    }
+
+    /* Setter */
     public static void setListe(ArrayList<Public> liste) {
         ListePublic.liste = liste;
         notification();
     }
 
-    public static ArrayList<Public> getListe() {
-        return liste;
+    public static void setNombreSecondeAttente(int nombreSecondeAttente) {
+        ListePublic.nombreSecondeAttente = nombreSecondeAttente;
     }
 
     public static void ajouterObservateur(Observateur o) {
