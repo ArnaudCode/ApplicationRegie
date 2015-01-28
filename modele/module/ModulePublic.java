@@ -1,9 +1,6 @@
 package modele.module;
 
-import java.io.IOException;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modele.applicationpublic.ListePublic;
 import modele.applicationpublic.Public;
 import org.json.JSONObject;
@@ -38,12 +35,8 @@ public class ModulePublic extends Module {
             /* Emision */
             ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
         } else {
-            try {
-                new Erreur("IP de l'application public déjà existante");
-                socket.close();
-            } catch (IOException ex) {
-                Logger.getLogger(ModulePublic.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            new Erreur("IP de l'application public déjà existante");
+            ListePublic.notification();
         }
 
         ListePublic.notification();
