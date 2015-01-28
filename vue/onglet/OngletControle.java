@@ -74,15 +74,19 @@ public class OngletControle extends JPanel implements Observateur {
         gbc.gridy++;
         this.add(jscollbar, gbc);
 
-        JLabel secondeAttente = new JLabel("Secondes d'attente : ");
+        JLabel tempsAttente = new JLabel("Temps d'attente : ");
         gbc.gridx++;
-        this.add(secondeAttente, gbc);
+        this.add(tempsAttente, gbc);
 
         JSpinner spinner = new JSpinner();
-        spinner.setValue(Parametre.NOMBRE_SECONDE_ATTENTE);
+        spinner.setValue(ListePublic.getNombreSecondeAttente());
         spinner.setPreferredSize(new Dimension(40, 25));
         gbc.gridx++;
         this.add(spinner, gbc);
+
+        JLabel enSeconde = new JLabel(" secondes");
+        gbc.gridx++;
+        this.add(enSeconde, gbc);
 
         /* Listener */
         jlist.addMouseListener(new MouseAdapter() {

@@ -30,10 +30,10 @@ public class Serveur implements Observable {
             thread = new Thread(new AcceptationConnexion(serveurSocket));
             thread.start();
 
-            adresse = InetAddress.getLocalHost();
             etat = true;
+            adresse = InetAddress.getLocalHost();
         } catch (IOException e) {
-            new Erreur("Port " + Parametre.SERVEUR_PORT + " déjà utilisé.");
+            new Erreur("Port " + Parametre.SERVEUR_PORT + " déjà utilisé\nL'application est probablement déjà en cours d'éxécution");
         }
     }
 
@@ -62,13 +62,11 @@ public class Serveur implements Observable {
     @Override
     public void ajouterObservateur(Observateur o) {
         listeObservateur.add(o);
-        this.notification();
     }
 
     @Override
     public void supprimerObservateur(Observateur o) {
         listeObservateur.remove(o);
-        this.notification();
     }
 
     @Override

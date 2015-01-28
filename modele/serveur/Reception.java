@@ -28,7 +28,9 @@ public class Reception implements Runnable {
                 module = Module.DetectionModule(ligne, socket);
             }
 
-            module.stop();
+            if (module != null) {
+                module.stop();
+            }
             socket.close();
             System.out.println("Fin de reception.");
         } catch (Exception e) {

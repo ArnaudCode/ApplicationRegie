@@ -27,7 +27,8 @@ public class OngletServeur extends JPanel implements Observateur {
         this.setPreferredSize(new Dimension(Parametre.LARGEUR, Parametre.HAUTEUR));
 
         description = "Gestion des connexions entre les modules";
-        this.serveur = null;
+        this.serveur = new Serveur(); //Lancement du serveur au démarrage
+        serveur.ajouterObservateur(this);
 
         initialisation();
     }
@@ -94,6 +95,7 @@ public class OngletServeur extends JPanel implements Observateur {
                 if (serveur == null || Serveur.getEtat() == false) {
                     serveur = new Serveur();
                     serveur.ajouterObservateur(ongletServeur);
+                    serveur.notification();
                 } else {
                     serveur.stop();
                     serveur.notification();
