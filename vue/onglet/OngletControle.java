@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import modele.Parametre;
 import modele.applicationpublic.ListePublic;
 import vue.Observateur;
@@ -71,6 +72,16 @@ public class OngletControle extends JPanel implements Observateur {
         gbc.gridy++;
         this.add(jscollbar, gbc);
 
+        JLabel secondeAttente = new JLabel("Secondes d'attente : ");
+        gbc.gridx++;
+        this.add(secondeAttente, gbc);
+
+        JSpinner spinner = new JSpinner();
+        spinner.setPreferredSize(new Dimension(40, 25));
+        gbc.gridx++;
+        this.add(spinner, gbc);
+
+        /* Listener */
         jlist.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {

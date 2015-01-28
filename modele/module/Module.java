@@ -2,6 +2,7 @@ package modele.module;
 
 import java.net.Socket;
 import org.json.JSONObject;
+import vue.Erreur;
 
 /**
  *
@@ -10,18 +11,23 @@ import org.json.JSONObject;
 public abstract class Module {
 
     public static Module DetectionModule(String requete, Socket socket) {
-        JSONObject json = new JSONObject(requete);
 
-        switch (json.get("idModule").toString()) {
-            case "localisation":
-                return new ModuleLocalisation(json);
+        try {
+            JSONObject json = new JSONObject(requete);
 
-            case "public":
-                return new ModulePublic(json, socket);
+            switch (json.get("idModule").toString()) {
+                case "localisation":
+                    return new ModuleLocalisation(json);
 
-            default:
-                System.out.println("idModule non reconnu : " + json.get("idModule").toString());
-                break;
+                case "public":
+                    return new ModulePublic(json, socket);
+
+                default:
+                    System.out.println("idModule non reconnu : " + json.get("idModule").toString());
+                    break;
+            }
+        } catch (Exception e) {
+            new Erreur("Le message reçu n'est pas au format JSON.");
         }
 
         return null;
