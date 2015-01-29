@@ -23,9 +23,16 @@ public class Reception implements Runnable {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String ligne = null;
-            while (!Thread.currentThread().isInterrupted() && (ligne = in.readLine()) != null) {
+
+            while ((ligne = in.readLine()) != null && module != null) {
+                //Première connection
                 System.out.println(ligne);
                 module = Module.DetectionModule(ligne, socket);
+            }
+
+            while (!Thread.currentThread().isInterrupted() && (ligne = in.readLine()) != null) {
+                System.out.println(ligne);
+                module.traitement(ligne);
             }
 
             if (module != null) {

@@ -33,6 +33,14 @@ public class Public {
 
     /*Setter */
     public void setAttente(boolean attente) {
+        this.attente = attente;
+    }
+
+    public void setControle(boolean controle) {
+        this.controle = controle;
+    }
+
+    public void envoieSecondes() {
         JSONObject confirmation = new JSONObject();
         if (attente == true) {
             confirmation.put("attente", true);
@@ -40,22 +48,15 @@ public class Public {
             confirmation.put("attente", false);
             confirmation.put("secondeAttente", ListePublic.getNombreSecondeAttente());
         }
-        new Emission(socket, confirmation.toString());
 
-        this.attente = attente;
-    }
-
-    public void setControle(boolean controle) {
-        JSONObject confirmation = new JSONObject();
         if (controle == true) {
             confirmation.put("controle", true);
             confirmation.put("secondeControle", ListePublic.getNombreSecondeControle());
         } else {
             confirmation.put("controle", false);
         }
-        new Emission(socket, confirmation.toString());
 
-        this.controle = controle;
+        new Emission(socket, confirmation.toString());
     }
 
 }

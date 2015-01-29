@@ -36,5 +36,7 @@ public abstract class Module {
         return null;
     }
 
+    public abstract void traitement(String ligne);
+
     public abstract void stop();
 }

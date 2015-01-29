@@ -46,28 +46,27 @@ Projet Tutoré IUT 2014-2015
 ###ApplicationPublic
 {
   "idModule": "public",
-  "detail": {
-    "action": "connecte",
-  }
+  "action": "init",
 }
 
 {
   "attente": true,
   "secondeAttente": 10
+  "secondeControle": 10
 }
 
 {
   "idModule": "public",
   "detail": {
     "action": "avancer",
-    "vitesse": "15"
+    "vitesse": 15
   }
 }
 
 ###Robot
 {
   "idModule": "raspberryRobot",
-  "etat": "pret"
+  "action": "init"
 }
 
 {

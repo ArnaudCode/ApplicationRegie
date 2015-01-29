@@ -3,7 +3,10 @@ package modele.module;
 import java.net.Socket;
 import modele.applicationpublic.ListePublic;
 import modele.applicationpublic.Public;
+import modele.robot.ListeRobot;
+import modele.serveur.Emission;
 import org.json.JSONObject;
+import vue.Erreur;
 
 /**
  *
@@ -19,24 +22,50 @@ public class ModulePublic extends Module {
         this.json = json;
         this.socket = socket;
 
-        /* Réception */
-        boolean dejaPresent = false;
-        for (Public p : ListePublic.getListe()) {
-            if (p.getAdresseIP().equals(socket.getInetAddress().getHostAddress())) {
-                dejaPresent = true;
+        if (json.get("action").equals("init")) {
+            /* Réception */
+            boolean dejaPresent = false;
+            for (Public p : ListePublic.getListe()) {
+                if (p.getAdresseIP().equals(socket.getInetAddress().getHostAddress())) {
+                    dejaPresent = true;
+                }
             }
+
+            if (dejaPresent == false) {
+                applicationpublic = new Public(socket);
+                ListePublic.getListe().add(applicationpublic);
+
+                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
+                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
+
+                /* Emision */
+                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).envoieSecondes();
+            }
+
+            ListePublic.notification();
+        } else {
+            new Erreur("Première connexion inccorecte :\nPas de action: init");
+        }
+    }
+
+    @Override
+    public void traitement(String ligne) {
+        JSONObject json = new JSONObject(ligne);
+
+        try {
+            JSONObject detail = json.getJSONObject("detail");
+
+            String action = json.getString("action");
+            String vitesse = String.valueOf(json.getInt("vitesse"));
+
+            JSONObject emission = new JSONObject();
+            emission.put("action", action);
+            emission.put("vitesse", vitesse);
+
+            new Emission(ListeRobot.getListe().get(0).getScoket(), emission.toString());
+        } catch (Exception e) {
         }
 
-        if (dejaPresent == false) {
-            applicationpublic = new Public(socket);
-            ListePublic.getListe().add(applicationpublic);
-
-            /* Emision */
-            ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
-            ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
-        }
-
-        ListePublic.notification();
     }
 
     @Override

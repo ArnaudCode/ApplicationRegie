@@ -114,6 +114,7 @@ public class OngletControle extends JPanel implements Observateur {
 
                     ListePublic.getListe().get(index).setAttente(!ListePublic.getListe().get(index).isAttente());
                     ListePublic.getListe().get(index).setControle(!ListePublic.getListe().get(index).isControle());
+                    ListePublic.getListe().get(index).envoieSecondes();
                 }
             }
         });

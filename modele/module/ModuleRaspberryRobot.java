@@ -1,7 +1,10 @@
 package modele.module;
 
 import java.net.Socket;
+import modele.robot.ListeRobot;
+import modele.robot.Robot;
 import org.json.JSONObject;
+import vue.Erreur;
 
 /**
  *
@@ -16,9 +19,18 @@ public class ModuleRaspberryRobot extends Module {
         this.json = json;
         this.socket = socket;
 
-        if (json.get("etat").equals("pret")) {
-
+        if (json.get("action").equals("init")) {
+            Robot nouveauRobot = new Robot(ListeRobot.getListe().size()); //Automatiquement +1 dû au size()
+            nouveauRobot.setSocket(socket);
+        } else {
+            new Erreur("Première connexion inccorecte :\nPas de action: init");
         }
+    }
+
+    @Override
+    public void traitement(String ligne) {
+        JSONObject json = new JSONObject(ligne);
+
     }
 
     @Override
