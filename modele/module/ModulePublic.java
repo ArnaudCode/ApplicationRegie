@@ -46,27 +46,25 @@ public class ModulePublic extends Module {
         try {
             JSONObject detail = json.getJSONObject("detail");
 
-            String action = json.getString("action");
-            String vitesse = String.valueOf(json.getInt("vitesse"));
+            String action = detail.getString("action");
 
-            JSONObject emission = new JSONObject();
-            emission.put("action", action);
-            emission.put("vitesse", vitesse);
+            if (action.equals("fin")) {
+                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
+                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
 
-            new Emission(ListeRobot.getListe().get(0).getScoket(), emission.toString());
-        } catch (Exception e) {
-            try {
-                String action = json.getString("action");
-                if (action.equals("fin")) {
-                    ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
-                    ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
+                /* Emision */
+                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).envoieSecondes();
+            } else {
+                String vitesse = String.valueOf(detail.optInt("vitesse"));
 
-                    /* Emision */
-                    ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).envoieSecondes();
-                }
-            } catch (Exception ee) {
+                JSONObject emission = new JSONObject();
+                emission.put("action", action);
+                emission.put("vitesse", vitesse);
 
+                new Emission(ListeRobot.getListe().get(0).getSocket(), emission.toString());
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

@@ -46,7 +46,7 @@ Projet Tutoré IUT 2014-2015
 ###ApplicationPublic
 {
   "idModule": "public",
-  "action": "init",
+  "action": "init"
 }
 
 {
@@ -60,6 +60,13 @@ Projet Tutoré IUT 2014-2015
   "detail": {
     "action": "avancer",
     "vitesse": 15
+  }
+}
+
+{
+  "idModule": "public",
+  "detail": {
+    "action": "fin"
   }
 }
 

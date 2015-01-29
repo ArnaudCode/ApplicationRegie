@@ -43,7 +43,7 @@ public class Robot {
         return numero;
     }
 
-    public Socket getScoket() {
+    public Socket getSocket() {
         return socket;
     }
 

@@ -20,8 +20,10 @@ public class ModuleRaspberryRobot extends Module {
         this.socket = socket;
 
         if (json.get("action").equals("init")) {
-            Robot nouveauRobot = new Robot(ListeRobot.getListe().size()); //Automatiquement +1 dû au size()
+            Robot nouveauRobot = new Robot(0); //Automatiquement +1 dû au size()
             nouveauRobot.setSocket(socket);
+            ListeRobot.getListe().add(0, nouveauRobot);
+            System.out.println("Rasp ajoute");
         } else {
             new Erreur("Première connexion inccorecte :\nPas de action: init");
         }
