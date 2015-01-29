@@ -55,6 +55,18 @@ public class ModulePublic extends Module {
 
             new Emission(ListeRobot.getListe().get(0).getScoket(), emission.toString());
         } catch (Exception e) {
+            try {
+                String action = json.getString("action");
+                if (action.equals("fin")) {
+                    ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
+                    ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
+
+                    /* Emision */
+                    ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).envoieSecondes();
+                }
+            } catch (Exception ee) {
+
+            }
         }
 
     }
