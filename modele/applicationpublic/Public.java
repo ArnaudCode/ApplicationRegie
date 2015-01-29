@@ -31,7 +31,6 @@ public class Public {
         JSONObject confirmation = new JSONObject();
         if (attente == true) {
             confirmation.put("attente", true);
-            confirmation.put("secondeAttente", 0);
         } else {
             confirmation.put("attente", false);
             confirmation.put("secondeAttente", ListePublic.getNombreSecondeAttente());

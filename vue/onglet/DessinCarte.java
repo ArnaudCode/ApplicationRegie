@@ -112,6 +112,22 @@ public class DessinCarte extends JPanel {
                             g.setColor(Color.BLUE);
                             g.fillOval(x_robot + 1, y_robot, img.getWidth() - 4, img.getWidth() - 4);
                             break;
+                        case 2:
+                            g.setColor(Color.GREEN);
+                            g.fillOval(x_robot + 1, y_robot, img.getWidth() - 4, img.getWidth() - 4);
+                            break;
+                        case 3:
+                            g.setColor(Color.YELLOW);
+                            g.fillOval(x_robot + 1, y_robot, img.getWidth() - 4, img.getWidth() - 4);
+                            break;
+                        case 4:
+                            g.setColor(Color.PINK);
+                            g.fillOval(x_robot + 1, y_robot, img.getWidth() - 4, img.getWidth() - 4);
+                            break;
+                        default:
+                            g.setColor(Color.WHITE);
+                            g.fillOval(x_robot + 1, y_robot, img.getWidth() - 4, img.getWidth() - 4);
+                            break;
                     }
 
                     g.drawImage(img, x_robot, y_robot, this);

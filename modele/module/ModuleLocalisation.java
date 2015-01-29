@@ -19,18 +19,29 @@ public class ModuleLocalisation extends Module {
     public ModuleLocalisation(JSONObject json, Socket socket) {
         this.json = json;
 
-        JSONArray robots = json.getJSONArray("robots");
+        JSONArray listeRobots = json.getJSONArray("robots");
 
-        ListeRobot.getListe().clear();
+        for (int i = 0; i < listeRobots.length(); i++) {
+            JSONObject robot = listeRobots.getJSONObject(i);
 
-        for (int i = 0; i < robots.length(); i++) {
-            ListeRobot.getListe().add(new Robot(i));
-            JSONArray coordonnee = robots.getJSONArray(i);
+            boolean existeDeja = false;
+            for (Robot r : ListeRobot.getListe()) {
+                if (r.getNumero() == robot.getInt("id")) {
+                    existeDeja = true;
+                    r.setPositionX(robot.getDouble("x"));
+                    r.setPositionY(robot.getDouble("y"));
+                }
+            }
 
-            ListeRobot.getListe().get(i).setPositionX(coordonnee.getDouble(0)); //Coordonnée x
-            ListeRobot.getListe().get(i).setPositionY(coordonnee.getDouble(1)); //Coordonnée y
+            if (existeDeja == false) {
+                Robot nouveauRobot = new Robot(robot.getInt("id"));
+                nouveauRobot.setPositionX(robot.getDouble("x"));
+                nouveauRobot.setPositionY(robot.getDouble("y"));
+                ListeRobot.getListe().add(nouveauRobot);
+            }
         }
 
+        /* Emmision d'une confirmation */
         JSONObject confirmation = new JSONObject();
         confirmation.put("action", "calibrage");
         confirmation.put("valeur", 25.3);

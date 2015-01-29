@@ -16,7 +16,7 @@ Projet Tutoré IUT 2014-2015
 {
   "idModule": "localisation",
   "action": "calibrage",
-  "statut": "OK"     OU    "statut": "NOK"
+  "statut": "NOK"
 }
 
 {
@@ -30,14 +30,16 @@ Projet Tutoré IUT 2014-2015
 {
   "idModule": "localisation",
   "robots": [
-    [
-      15,
-      27
-    ],
-    [
-      3,
-      16
-    ]
+     {
+      "id": 0,
+      "x": 15,
+      "y": 2
+    },
+    {
+      "id": 1,
+      "x": 3,
+      "y": 37
+    }
   ]
 }
 
@@ -60,4 +62,15 @@ Projet Tutoré IUT 2014-2015
     "action": "avancer",
     "vitesse": "15"
   }
+}
+
+###Robot
+{
+  "idModule": "raspberryRobot",
+  "etat": "pret"
+}
+
+{
+  "action": "avancer",
+  "vitesse": "15"
 }

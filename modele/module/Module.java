@@ -22,6 +22,9 @@ public abstract class Module {
                 case "public":
                     return new ModulePublic(json, socket);
 
+                case "raspberryRobot":
+                    return new ModuleRaspberryRobot(json, socket);
+
                 default:
                     System.out.println("idModule non reconnu : " + json.get("idModule").toString());
                     break;
