@@ -19,38 +19,10 @@ public class ModuleLocalisation extends Module {
 
     public ModuleLocalisation(JSONObject json, Socket socket) {
         this.json = json;
+        this.socket = socket;
 
         if (json.get("action").equals("init")) {
-            JSONArray listeRobots = json.getJSONArray("robots");
-
-            for (int i = 0; i < listeRobots.length(); i++) {
-                JSONObject robot = listeRobots.getJSONObject(i);
-
-                boolean existeDeja = false;
-                for (Robot r : ListeRobot.getListe()) {
-                    if (r.getNumero() == robot.getInt("id")) {
-                        existeDeja = true;
-                        r.setPositionX(robot.getDouble("x"));
-                        r.setPositionY(robot.getDouble("y"));
-                    }
-                }
-
-                if (existeDeja == false) {
-                    Robot nouveauRobot = new Robot(robot.getInt("id")); //Pour les tests, ne doit pas être créé ici (uniquement lors de la reception du RaspberryRobot)
-                    nouveauRobot.setPositionX(robot.getDouble("x"));
-                    nouveauRobot.setPositionY(robot.getDouble("y"));
-                    ListeRobot.getListe().add(nouveauRobot);
-                }
-            }
-
-            /* Emmision d'une confirmation */
-            JSONObject confirmation = new JSONObject();
-            confirmation.put("action", "calibrage");
-            confirmation.put("valeur", 25.3);
-
-            new Emission(socket, confirmation.toString());
-
-            ListeRobot.notification();
+            System.out.println("Nouveau Module Localisation");
         } else {
             new Erreur("Première connexion inccorecte :\nPas de action: init");
         }
@@ -60,6 +32,36 @@ public class ModuleLocalisation extends Module {
     public void traitement(String ligne) {
         JSONObject json = new JSONObject(ligne);
 
+        JSONArray listeRobots = json.getJSONArray("robots");
+
+        for (int i = 0; i < listeRobots.length(); i++) {
+            JSONObject robot = listeRobots.getJSONObject(i);
+
+            boolean existeDeja = false;
+            for (Robot r : ListeRobot.getListe()) {
+                if (r.getNumero() == robot.getInt("id")) {
+                    existeDeja = true;
+                    r.setPositionX(robot.getDouble("x"));
+                    r.setPositionY(robot.getDouble("y"));
+                }
+            }
+
+            if (existeDeja == false) {
+                Robot nouveauRobot = new Robot(robot.getInt("id")); //Pour les tests, ne doit pas être créé ici (uniquement lors de la reception du RaspberryRobot)
+                nouveauRobot.setPositionX(robot.getDouble("x"));
+                nouveauRobot.setPositionY(robot.getDouble("y"));
+                ListeRobot.getListe().add(nouveauRobot);
+            }
+        }
+
+        /* Emmision d'une confirmation */
+        JSONObject confirmation = new JSONObject();
+        confirmation.put("action", "calibrage");
+        confirmation.put("valeur", 25.3);
+
+        new Emission(socket, confirmation.toString());
+
+        ListeRobot.notification();
     }
 
     @Override

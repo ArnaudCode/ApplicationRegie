@@ -24,23 +24,14 @@ public class ModulePublic extends Module {
 
         if (json.get("action").equals("init")) {
             /* Réception */
-            boolean dejaPresent = false;
-            for (Public p : ListePublic.getListe()) {
-                if (p.getAdresseIP().equals(socket.getInetAddress().getHostAddress())) {
-                    dejaPresent = true;
-                }
-            }
+            applicationpublic = new Public(socket);
+            ListePublic.getListe().add(applicationpublic);
 
-            if (dejaPresent == false) {
-                applicationpublic = new Public(socket);
-                ListePublic.getListe().add(applicationpublic);
+            ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
+            ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
 
-                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
-                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
-
-                /* Emision */
-                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).envoieSecondes();
-            }
+            /* Emision */
+            ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).envoieSecondes();
 
             ListePublic.notification();
         } else {
