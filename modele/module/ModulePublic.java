@@ -33,6 +33,7 @@ public class ModulePublic extends Module {
 
             /* Emision */
             ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
+            ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
         }
 
         ListePublic.notification();

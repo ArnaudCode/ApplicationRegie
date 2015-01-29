@@ -12,6 +12,7 @@ public class ListePublic {
 
     private static ArrayList<Public> liste = new ArrayList<Public>();
     private static int nombreSecondeAttente = Parametre.NOMBRE_SECONDE_ATTENTE;
+    private static int nombreSecondeControle = Parametre.NOMBRE_SECONDE_CONTROLE;
 
     private static ArrayList<Observateur> listeObservateur = new ArrayList<>();
 
@@ -27,6 +28,10 @@ public class ListePublic {
         return nombreSecondeAttente;
     }
 
+    public static int getNombreSecondeControle() {
+        return nombreSecondeControle;
+    }
+
     /* Setter */
     public static void setListe(ArrayList<Public> liste) {
         ListePublic.liste = liste;
@@ -35,6 +40,10 @@ public class ListePublic {
 
     public static void setNombreSecondeAttente(int nombreSecondeAttente) {
         ListePublic.nombreSecondeAttente = nombreSecondeAttente;
+    }
+
+    public static void setNombreSecondeControle(int nombreSecondeControle) {
+        ListePublic.nombreSecondeControle = nombreSecondeControle;
     }
 
     public static void ajouterObservateur(Observateur o) {

@@ -18,4 +18,5 @@ public class Parametre {
 
     /* COnfiguration contrôle */
     public static final int NOMBRE_SECONDE_ATTENTE = 10;
+    public static final int NOMBRE_SECONDE_CONTROLE = 30;
 }

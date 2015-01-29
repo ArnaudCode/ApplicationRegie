@@ -69,24 +69,40 @@ public class OngletControle extends JPanel implements Observateur {
             jlist = new JList();
         }
         JScrollPane jscollbar = new JScrollPane(jlist);
-        jscollbar.setPreferredSize(new Dimension(200, 350));
+        jscollbar.setPreferredSize(new Dimension(200, 300));
 
         gbc.gridy++;
         this.add(jscollbar, gbc);
 
         JLabel tempsAttente = new JLabel("Temps d'attente : ");
-        gbc.gridx++;
+        gbc.gridx = 0;
+        gbc.gridy++;
         this.add(tempsAttente, gbc);
 
-        JSpinner spinner = new JSpinner();
-        spinner.setValue(ListePublic.getNombreSecondeAttente());
-        spinner.setPreferredSize(new Dimension(40, 25));
+        JSpinner spinnerAttente = new JSpinner();
+        spinnerAttente.setValue(ListePublic.getNombreSecondeAttente());
+        spinnerAttente.setPreferredSize(new Dimension(40, 25));
         gbc.gridx++;
-        this.add(spinner, gbc);
+        this.add(spinnerAttente, gbc);
 
-        JLabel enSeconde = new JLabel(" secondes");
+        JLabel enSecondeAttente = new JLabel(" secondes");
         gbc.gridx++;
-        this.add(enSeconde, gbc);
+        this.add(enSecondeAttente, gbc);
+
+        JLabel tempsControle = new JLabel("Temps de contrôle : ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        this.add(tempsControle, gbc);
+
+        JSpinner spinnerControle = new JSpinner();
+        spinnerControle.setValue(ListePublic.getNombreSecondeControle());
+        spinnerControle.setPreferredSize(new Dimension(40, 25));
+        gbc.gridx++;
+        this.add(spinnerControle, gbc);
+
+        JLabel enSecondeControle = new JLabel(" secondes");
+        gbc.gridx++;
+        this.add(enSecondeControle, gbc);
 
         /* Listener */
         jlist.addMouseListener(new MouseAdapter() {
@@ -97,14 +113,22 @@ public class OngletControle extends JPanel implements Observateur {
                     int index = liste.locationToIndex(evt.getPoint());
 
                     ListePublic.getListe().get(index).setAttente(!ListePublic.getListe().get(index).isAttente());
+                    ListePublic.getListe().get(index).setControle(!ListePublic.getListe().get(index).isControle());
                 }
             }
         });
 
-        spinner.addChangeListener(new ChangeListener() {
+        spinnerAttente.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 ListePublic.setNombreSecondeAttente((int) ((JSpinner) e.getSource()).getValue());
+            }
+        });
+
+        spinnerControle.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ListePublic.setNombreSecondeControle((int) ((JSpinner) e.getSource()).getValue());
             }
         });
     }
