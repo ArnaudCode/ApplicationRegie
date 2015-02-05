@@ -4,11 +4,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import modele.Parametre;
+import modele.module.ModuleLocalisation;
 
 /**
  *
@@ -53,7 +56,7 @@ public class OngletRobot extends JPanel {
 
         JSpinner valeurCalibrage = new JSpinner();
         valeurCalibrage.setValue(100);
-        valeurCalibrage.setPreferredSize(new Dimension(50, 25));
+        valeurCalibrage.setPreferredSize(new Dimension(55, 25));
         gbc.gridx++;
         this.add(valeurCalibrage, gbc);
 
@@ -61,10 +64,17 @@ public class OngletRobot extends JPanel {
         gbc.gridx++;
         this.add(uniteCalibrage, gbc);
 
-        JButton calbrage = new JButton("Calibrer");
+        JButton calibrage = new JButton("Calibrer");
         gbc.gridx = 0;
         gbc.gridy++;
-        this.add(calbrage, gbc);
+        this.add(calibrage, gbc);
+
+        calibrage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ModuleLocalisation.demandeCalibrage((int) valeurCalibrage.getValue());
+            }
+        });
     }
 
 }
