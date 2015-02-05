@@ -3,28 +3,17 @@ Projet Tutoré IUT 2014-2015
 
 ##Format de données
 ###Localisation
+####Localisation à régie
 {
   "idModule": "localisation",
   "action": "init"
 }
 
 {
-  "action": "calibrage",
-  "valeur": 25.3
-}
-
-{
   "idModule": "localisation",
   "action": "calibrage",
-  "statut": "NOK"
-}
-
-{
-  "action": "start"
-}
-
-{
-  "action": "stop"
+  "statut": "NOK" || "OK"
+  "message": "..." //Facultatif
 }
 
 {
@@ -42,6 +31,22 @@ Projet Tutoré IUT 2014-2015
     }
   ]
 }
+
+####Régie à localisation
+
+{
+  "action": "calibrage",
+  "valeur": 25.3
+}
+
+{
+  "action": "start"
+}
+
+{
+  "action": "stop"
+}
+
 
 ###ApplicationPublic
 {
