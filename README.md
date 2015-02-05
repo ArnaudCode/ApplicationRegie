@@ -12,7 +12,7 @@ Projet Tutoré IUT 2014-2015
 {
   "idModule": "localisation",
   "action": "calibrage",
-  "statut": "NOK" || "OK"
+  "statut": "NOK" || "OK",
   "message": "..." //Facultatif
 }
 
