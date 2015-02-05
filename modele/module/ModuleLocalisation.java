@@ -86,13 +86,6 @@ public class ModuleLocalisation extends Module {
             e.printStackTrace();
         }
 
-        /* Emmision d'une confirmation */
-        JSONObject confirmation = new JSONObject();
-        confirmation.put("action", "calibrage");
-        confirmation.put("valeur", 25.3);
-
-        new Emission(socket, confirmation.toString());
-
         ListeRobot.notification();
     }
 
