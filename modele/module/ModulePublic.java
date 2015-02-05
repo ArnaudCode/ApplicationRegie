@@ -41,9 +41,9 @@ public class ModulePublic extends Module {
 
     @Override
     public void traitement(String ligne) {
-        JSONObject json = new JSONObject(ligne);
-
         try {
+            JSONObject json = new JSONObject(ligne);
+
             JSONObject detail = json.getJSONObject("detail");
 
             String action = detail.getString("action");

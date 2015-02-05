@@ -15,7 +15,7 @@ import vue.Erreur;
 public class ModuleLocalisation extends Module {
 
     private JSONObject json = null;
-    private Socket socket = null;
+    private static Socket socket = null;
 
     public ModuleLocalisation(JSONObject json, Socket socket) {
         this.json = json;
@@ -29,28 +29,57 @@ public class ModuleLocalisation extends Module {
 
     @Override
     public void traitement(String ligne) {
-        JSONObject json = new JSONObject(ligne);
-
         try {
-            JSONArray listeRobots = json.getJSONArray("robots");
+            JSONObject json = new JSONObject(ligne);
 
-            for (int i = 0; i < listeRobots.length(); i++) {
-                JSONObject robot = listeRobots.getJSONObject(i);
+            JSONObject action = json.optJSONObject("action");
+            if (action != null) {
+                switch (action.toString()) {
+                    case "calibrage":
+                        JSONObject statut = json.optJSONObject("statut");
 
-                boolean existeDeja = false;
-                for (Robot r : ListeRobot.getListe()) {
-                    if (r.getNumero() == robot.getInt("id")) {
-                        existeDeja = true;
-                        r.setPositionX(robot.getDouble("x"));
-                        r.setPositionY(robot.getDouble("y"));
-                    }
+                        if (statut.toString() != "") {
+                            if (statut.equals("OK")) {
+                                JSONObject confirmation = new JSONObject();
+
+                                confirmation.put("action", "start");
+                                new Emission(socket, confirmation.toString());
+                            } else {
+                                JSONObject message = json.optJSONObject("message");
+
+                                if (message != null) {
+                                    new Erreur(message.toString());
+                                } else {
+                                    new Erreur("Problème localisation :\nNok sans message.");
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        new Erreur("Probleme reception localisation");
+                        break;
                 }
+            } else {
+                JSONArray listeRobots = json.getJSONArray("robots");
 
-                if (existeDeja == false) {
-                    Robot nouveauRobot = new Robot(robot.getInt("id")); //Pour les tests, ne doit pas être créé ici (uniquement lors de la reception du RaspberryRobot)
-                    nouveauRobot.setPositionX(robot.getDouble("x"));
-                    nouveauRobot.setPositionY(robot.getDouble("y"));
-                    ListeRobot.getListe().add(nouveauRobot);
+                for (int i = 0; i < listeRobots.length(); i++) {
+                    JSONObject robot = listeRobots.getJSONObject(i);
+
+                    boolean existeDeja = false;
+                    for (Robot r : ListeRobot.getListe()) {
+                        if (r.getNumero() == robot.getInt("id")) {
+                            existeDeja = true;
+                            r.setPositionX(robot.getDouble("x"));
+                            r.setPositionY(robot.getDouble("y"));
+                        }
+                    }
+
+                    if (existeDeja == false) {
+                        Robot nouveauRobot = new Robot(robot.getInt("id")); //Pour les tests, ne doit pas être créé ici (uniquement lors de la reception du RaspberryRobot)
+                        nouveauRobot.setPositionX(robot.getDouble("x"));
+                        nouveauRobot.setPositionY(robot.getDouble("y"));
+                        ListeRobot.getListe().add(nouveauRobot);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -69,6 +98,14 @@ public class ModuleLocalisation extends Module {
 
     @Override
     public void stop() {
+    }
+
+    public static void demandeCalibrage(int valeur) {
+        /* Emmission d'une demande de calibrage avec la valeur */
+        JSONObject confirmation = new JSONObject();
+        confirmation.put("action", "calibrage");
+        confirmation.put("valeur", ((double) valeur) / 100.0); //En mètres
+        new Emission(socket, confirmation.toString());
     }
 
 }
