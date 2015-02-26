@@ -32,7 +32,7 @@ public class ModuleLocalisation extends Module {
         try {
             JSONObject json = new JSONObject(ligne);
 
-            String action = json.optString("action");
+            String action = json.optString("action", null);
             if (action != null) {
                 switch (action) {
                     case "calibrage":
