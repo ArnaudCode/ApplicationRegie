@@ -32,20 +32,20 @@ public class ModuleLocalisation extends Module {
         try {
             JSONObject json = new JSONObject(ligne);
 
-            JSONObject action = json.optJSONObject("action");
+            String action = json.optString("action");
             if (action != null) {
-                switch (action.toString()) {
+                switch (action) {
                     case "calibrage":
-                        JSONObject statut = json.optJSONObject("statut");
+                        String statut = json.optString("statut");
 
-                        if (statut.toString() != "") {
+                        if (statut != null) {
                             if (statut.equals("OK")) {
                                 JSONObject confirmation = new JSONObject();
 
                                 confirmation.put("action", "start");
                                 new Emission(socket, confirmation.toString());
                             } else {
-                                JSONObject message = json.optJSONObject("message");
+                                String message = json.optString("message");
 
                                 if (message != null) {
                                     new Erreur(message.toString());
