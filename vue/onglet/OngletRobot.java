@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import modele.Parametre;
 import modele.module.ModuleLocalisation;
 
@@ -59,10 +60,18 @@ public class OngletRobot extends JPanel {
         valeurCalibrage.setPreferredSize(new Dimension(55, 25));
         gbc.gridx++;
         this.add(valeurCalibrage, gbc);
-
+        
         JLabel uniteCalibrage = new JLabel(" centimètres");
         gbc.gridx++;
         this.add(uniteCalibrage, gbc);
+        
+        gbc.gridy++;
+        gbc.gridx=0;
+        this.add(new JLabel("Nombre de robots"),gbc);
+        
+        gbc.gridx++;
+        JSpinner nbRobots = new JSpinner(new SpinnerNumberModel(1, 1, 2, 1));
+        this.add(nbRobots,gbc);
 
         JButton calibrage = new JButton("Calibrer");
         gbc.gridx = 0;
@@ -72,7 +81,8 @@ public class OngletRobot extends JPanel {
         calibrage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ModuleLocalisation.demandeCalibrage((int) valeurCalibrage.getValue());
+                ModuleLocalisation.demandeCalibrage((int) valeurCalibrage.getValue(),
+                        (int)nbRobots.getValue());
             }
         });
     }

@@ -93,11 +93,12 @@ public class ModuleLocalisation extends Module {
     public void stop() {
     }
 
-    public static void demandeCalibrage(int valeur) {
+    public static void demandeCalibrage(int valeur, int nbRobots) {
         /* Emmission d'une demande de calibrage avec la valeur */
         JSONObject confirmation = new JSONObject();
         confirmation.put("action", "calibrage");
         confirmation.put("valeur", ((double) valeur) / 100.0); //En mètres
+        confirmation.put("nbRobots", nbRobots);
         new Emission(socket, confirmation.toString());
     }
 
