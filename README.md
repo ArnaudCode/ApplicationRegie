@@ -36,7 +36,8 @@ Projet Tutoré IUT 2014-2015
 
 {
   "action": "calibrage",
-  "valeur": 25.3
+  "valeur": 25.3,
+  "nbRobots": 2
 }
 
 {
