@@ -57,8 +57,9 @@ Projet Tutoré IUT 2014-2015
 
 {
   "attente": true,
-  "secondeAttente": 10
-  "secondeControle": 10
+  "secondeAttente": 10,
+  "secondeControle": 10,
+  "couleurRobot": "rouge";
 }
 
 {

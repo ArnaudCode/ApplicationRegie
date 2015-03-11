@@ -1,6 +1,7 @@
 package modele.applicationpublic;
 
 import java.net.Socket;
+import modele.robot.ListeRobot;
 import modele.serveur.Emission;
 import org.json.JSONObject;
 
@@ -42,18 +43,34 @@ public class Public {
 
     public void envoieSecondes() {
         JSONObject confirmation = new JSONObject();
-        if (attente == true) {
+        if (attente == true && controle == false) {
             confirmation.put("attente", true);
         } else {
             confirmation.put("attente", false);
             confirmation.put("secondeAttente", ListePublic.getNombreSecondeAttente());
-        }
 
-        if (controle == true) {
-            confirmation.put("controle", true);
             confirmation.put("secondeControle", ListePublic.getNombreSecondeControle());
-        } else {
-            confirmation.put("controle", false);
+
+            //Recherche d'un robot a controller
+            for (int i = 0; i < ListeRobot.getListe().size(); i++) {
+                if (ListeRobot.getListe().get(i).getAdresseIpPublic().isEmpty()) {
+                    ListeRobot.getListe().get(i).setAdresseIpPublic(this.getAdresseIP());
+                    switch (ListeRobot.getListe().get(i).getNumero()) {
+                        case 0:
+                            confirmation.put("couleurRobot", "rouge");
+                            break;
+                        case 1:
+                            confirmation.put("couleurRobot", "bleu");
+                            break;
+                        case 2:
+                            confirmation.put("couleurRobot", "vert");
+                            break;
+                        default:
+                            confirmation.put("couleurRobot", "blanc");
+                            break;
+                    }
+                }
+            }
         }
 
         new Emission(socket, confirmation.toString());

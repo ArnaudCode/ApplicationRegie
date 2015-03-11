@@ -52,6 +52,13 @@ public class ModulePublic extends Module {
                 ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
                 ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
 
+                //Recherche du robot qui etait controlle
+                for (int i = 0; i < ListeRobot.getListe().size(); i++) {
+                    if (ListeRobot.getListe().get(i).getAdresseIpPublic().equals(applicationpublic.getAdresseIP())) {
+                        ListeRobot.getListe().get(i).setAdresseIpPublic("");
+                    }
+                }
+
                 /* Emision */
                 ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).envoieSecondes();
             } else {

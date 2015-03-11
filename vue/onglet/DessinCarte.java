@@ -78,12 +78,6 @@ public class DessinCarte extends JPanel {
                             case 2:
                                 g.setColor(Color.GREEN);
                                 break;
-                            case 3:
-                                g.setColor(Color.YELLOW);
-                                break;
-                            case 4:
-                                g.setColor(Color.PINK);
-                                break;
                             default:
                                 g.setColor(Color.WHITE);
                                 break;

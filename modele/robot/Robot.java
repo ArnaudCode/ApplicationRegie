@@ -12,6 +12,7 @@ public class Robot {
     private double positionX = -1.0;
     private double positionY = -1.0;
     private Socket socket = null;
+    private String adresseIpPublic = "";
 
     public Robot(int numero) {
         this.numero = numero;
@@ -30,6 +31,10 @@ public class Robot {
         this.socket = socket;
     }
 
+    public void setAdresseIpPublic(String adresseIpPublic) {
+        this.adresseIpPublic = adresseIpPublic;
+    }
+
     /* Getter */
     public double getPositionX() {
         return positionX;
@@ -45,6 +50,10 @@ public class Robot {
 
     public Socket getSocket() {
         return socket;
+    }
+
+    public String getAdresseIpPublic() {
+        return adresseIpPublic;
     }
 
 }
