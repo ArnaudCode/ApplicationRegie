@@ -61,7 +61,11 @@ public class OngletServeur extends JPanel implements Observateur {
         if (Serveur.getAdresse() == null) {
             adresseIP = new JLabel("xxx.xxx.xxx.xxx" + ":" + Parametre.SERVEUR_PORT + " (x)");
         } else {
-            adresseIP = new JLabel(Serveur.getAdresse().getHostAddress() + ":" + Parametre.SERVEUR_PORT + " (" + Serveur.getAdresse().getHostName() + ")");
+            try {
+                adresseIP = new JLabel(Serveur.getAdresse().getLocalHost().toString() + ":" + Parametre.SERVEUR_PORT + " (" + Serveur.getAdresse().getHostName() + ")");
+            } catch (Exception e) {
+                adresseIP = new JLabel(Serveur.getAdresse().getHostAddress() + ":" + Parametre.SERVEUR_PORT + " (" + Serveur.getAdresse().getHostName() + ")");
+            }
         }
 
         /* Placement des composants */

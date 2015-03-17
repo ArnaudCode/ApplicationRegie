@@ -91,7 +91,7 @@ public class DessinCarte extends JPanel {
                 try {
                     BufferedImage img = null;
 
-                    File file = new File("src\\img\\robot.png").getAbsoluteFile();
+                    File file = new File("src/img/robot.png").getAbsoluteFile();
                     img = ImageIO.read(file);
 
                     int x_robot = x_cercle + ((int) robot.getPositionX() * rayon_pixel / rayon_centimetre) - img.getWidth() / 2;

@@ -52,12 +52,7 @@ public class ModulePublic extends Module {
                 ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
                 ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
 
-                //Recherche du robot qui etait controlle
-                for (int i = 0; i < ListeRobot.getListe().size(); i++) {
-                    if (ListeRobot.getListe().get(i).getAdresseIpPublic().equals(applicationpublic.getAdresseIP())) {
-                        ListeRobot.getListe().get(i).setAdresseIpPublic("");
-                    }
-                }
+                libererRobot();
 
                 /* Emision */
                 ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).envoieSecondes();
@@ -79,7 +74,17 @@ public class ModulePublic extends Module {
     @Override
     public void stop() {
         ListePublic.getListe().remove(applicationpublic);
+        libererRobot();
         ListePublic.notification();
+    }
+
+    private void libererRobot() {
+        //Recherche du robot qui etait controlle
+        for (int i = 0; i < ListeRobot.getListe().size(); i++) {
+            if (ListeRobot.getListe().get(i).getAdresseIpPublic().equals(applicationpublic.getAdresseIP())) {
+                ListeRobot.getListe().get(i).setAdresseIpPublic("");
+            }
+        }
     }
 
 }

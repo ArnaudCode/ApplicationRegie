@@ -41,7 +41,7 @@ public class Public {
         this.controle = controle;
     }
 
-    public void envoieSecondes() {
+    public boolean envoieSecondes() {
         JSONObject confirmation = new JSONObject();
         if (attente == true && controle == false) {
             confirmation.put("attente", true);
@@ -69,11 +69,12 @@ public class Public {
                             confirmation.put("couleurRobot", "blanc");
                             break;
                     }
+                    new Emission(socket, confirmation.toString());
+                    return true;
                 }
             }
         }
-
-        new Emission(socket, confirmation.toString());
+        return false;
     }
 
 }

@@ -18,6 +18,7 @@ public class Emission {
             PrintWriter out = new PrintWriter(socket.getOutputStream());
             out.println(message);
             out.flush();
+            System.out.println("\u001B[34m" + message + "\u001B[0m");
         } catch (IOException ex) {
             Logger.getLogger(Emission.class.getName()).log(Level.SEVERE, null, ex);
             new Erreur(ex.getMessage());

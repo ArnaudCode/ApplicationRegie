@@ -13,12 +13,13 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import modele.Parametre;
 import modele.module.ModuleLocalisation;
+import vue.Observateur;
 
 /**
  *
  * @author Arnaud
  */
-public class OngletRobot extends JPanel {
+public class OngletRobot extends JPanel implements Observateur {
 
     private String description = null;
 
@@ -28,6 +29,8 @@ public class OngletRobot extends JPanel {
         description = "Choix du mode de déplacement des robots";
 
         initialisation();
+
+        ModuleLocalisation.ajouterObservateur(this);
     }
 
     /* Getter */
@@ -57,34 +60,96 @@ public class OngletRobot extends JPanel {
 
         JSpinner valeurCalibrage = new JSpinner();
         valeurCalibrage.setValue(100);
-        valeurCalibrage.setPreferredSize(new Dimension(55, 25));
+        valeurCalibrage.setPreferredSize(new Dimension(50, 25));
         gbc.gridx++;
         this.add(valeurCalibrage, gbc);
-        
+
         JLabel uniteCalibrage = new JLabel(" centimètres");
         gbc.gridx++;
         this.add(uniteCalibrage, gbc);
-        
+
         gbc.gridy++;
-        gbc.gridx=0;
-        this.add(new JLabel("Nombre de robots"),gbc);
-        
+        gbc.gridx = 0;
+        this.add(new JLabel("Nombre de robots : "), gbc);
+
         gbc.gridx++;
         JSpinner nbRobots = new JSpinner(new SpinnerNumberModel(1, 1, 2, 1));
-        this.add(nbRobots,gbc);
+        this.add(nbRobots, gbc);
+
+        JLabel nombreRobots = new JLabel("robots");
+        gbc.gridx++;
+        this.add(nombreRobots, gbc);
 
         JButton calibrage = new JButton("Calibrer");
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy++;
         this.add(calibrage, gbc);
 
+        JLabel appliLoca = new JLabel("(L'Application Localisation n'est pas connectée)");
+        appliLoca.setFont(new Font(appliLoca.getFont().getName(), Font.ITALIC, appliLoca.getFont().getSize()));
+        gbc.gridx = 0;
+        this.add(appliLoca, gbc);
+
+        JButton start = new JButton("Start");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        this.add(start, gbc);
+
+        JButton stop = new JButton("Stop");
+        gbc.gridx = 1;
+        this.add(stop, gbc);
+
+        /* Activation des boutons */
+        if (ModuleLocalisation.estConnecte()) {
+            calibrage.setEnabled(true);
+            appliLoca.setVisible(false);
+
+            if (ModuleLocalisation.calibrageEffectue == true && ModuleLocalisation.localisationStart == false) {
+                start.setEnabled(true);
+            } else {
+                start.setEnabled(false);
+            }
+
+            if (ModuleLocalisation.localisationStart == true) {
+                stop.setEnabled(true);
+            } else {
+                stop.setEnabled(false);
+            }
+        } else {
+            appliLoca.setVisible(true);
+            calibrage.setEnabled(false);
+            start.setEnabled(false);
+            stop.setEnabled(false);
+        }
+
+        /* Listener */
         calibrage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ModuleLocalisation.demandeCalibrage((int) valeurCalibrage.getValue(),
-                        (int)nbRobots.getValue());
+                ModuleLocalisation.demandeCalibrage((int) valeurCalibrage.getValue(), (int) nbRobots.getValue());
             }
         });
+
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ModuleLocalisation.startLocalisation();
+            }
+        });
+
+        stop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ModuleLocalisation.stopLocalisation();
+            }
+        });
+    }
+
+    @Override
+    public void miseAJour() {
+        this.removeAll();
+        initialisation();
+        this.updateUI();
     }
 
 }
