@@ -48,7 +48,7 @@ public class ModulePublic extends Module {
 
             String action = detail.getString("action");
 
-            if (action.equals("fin")) {
+            if (action.equals("fin") || action.equals("refuser")) {
                 ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
                 ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
 
@@ -63,7 +63,7 @@ public class ModulePublic extends Module {
                 emission.put("action", action);
                 emission.put("vitesse", vitesse);
 
-                new Emission(ListeRobot.getListe().get(0).getSocket(), emission.toString());
+                new Emission(ListeRobot.getListe().get(0).getSocket(), emission.toString()); //Robot ecrit en dur !
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,6 +82,13 @@ public class ModulePublic extends Module {
         //Recherche du robot qui etait controlle
         for (int i = 0; i < ListeRobot.getListe().size(); i++) {
             if (ListeRobot.getListe().get(i).getAdresseIpPublic().equals(applicationpublic.getAdresseIP())) {
+
+                JSONObject emission = new JSONObject();
+                emission.put("action", "stop");
+                emission.put("vitesse", "0");
+
+                new Emission(ListeRobot.getListe().get(i).getSocket(), emission.toString());
+
                 ListeRobot.getListe().get(i).setAdresseIpPublic("");
             }
         }
