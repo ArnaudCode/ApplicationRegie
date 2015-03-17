@@ -19,7 +19,7 @@ public class ApplicationRegie {
         }
 
         Fenetre fenetre = new Fenetre();
-        fenetre.show();
+        fenetre.setVisible(true);
     }
 
 }
