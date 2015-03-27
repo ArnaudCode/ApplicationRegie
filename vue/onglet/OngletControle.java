@@ -4,8 +4,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -14,6 +17,7 @@ import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import modele.Parametre;
+import modele.applicationpublic.Automatique;
 import modele.applicationpublic.ListePublic;
 import vue.Observateur;
 
@@ -24,6 +28,7 @@ import vue.Observateur;
 public class OngletControle extends JPanel implements Observateur {
 
     private String description = null;
+    private Automatique threadAutomtique = null; // Le thread qui sera initialisé au moment du lancement du mode automatique
 
     public OngletControle() {
         this.setPreferredSize(new Dimension(Parametre.LARGEUR, Parametre.HAUTEUR));
@@ -69,14 +74,16 @@ public class OngletControle extends JPanel implements Observateur {
             jlist = new JList();
         }
         JScrollPane jscollbar = new JScrollPane(jlist);
-        jscollbar.setPreferredSize(new Dimension(200, 300));
+        jscollbar.setPreferredSize(new Dimension(200, 345));
 
         gbc.gridy++;
+        gbc.gridheight = 10;
         this.add(jscollbar, gbc);
+        gbc.gridheight = 1;
 
         JLabel tempsAttente = new JLabel("Temps d'attente : ");
-        gbc.gridx = 0;
-        gbc.gridy++;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
         this.add(tempsAttente, gbc);
 
         JSpinner spinnerAttente = new JSpinner();
@@ -90,7 +97,7 @@ public class OngletControle extends JPanel implements Observateur {
         this.add(enSecondeAttente, gbc);
 
         JLabel tempsControle = new JLabel("Temps de contrôle : ");
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy++;
         this.add(tempsControle, gbc);
 
@@ -103,6 +110,30 @@ public class OngletControle extends JPanel implements Observateur {
         JLabel enSecondeControle = new JLabel(" secondes");
         gbc.gridx++;
         this.add(enSecondeControle, gbc);
+
+        //this.add(new JSeparator());
+        JLabel modeAutomatique = new JLabel("Mode Automatique :");
+        gbc.gridx = 1;
+        gbc.gridy++;
+        this.add(modeAutomatique, gbc);
+
+        JButton start = new JButton("Start");
+        gbc.gridx = 1;
+        gbc.gridy++;
+        this.add(start, gbc);
+
+        JButton stop = new JButton("Stop");
+        gbc.gridx++;
+        this.add(stop, gbc);
+
+        /* Activation des boutons */
+        if (threadAutomtique == null) {
+            start.setEnabled(true);
+            stop.setEnabled(false);
+        } else {
+            start.setEnabled(false);
+            stop.setEnabled(true);
+        }
 
         /* Listener */
         jlist.addMouseListener(new MouseAdapter() {
@@ -130,6 +161,25 @@ public class OngletControle extends JPanel implements Observateur {
             @Override
             public void stateChanged(ChangeEvent e) {
                 ListePublic.setNombreSecondeControle((int) ((JSpinner) e.getSource()).getValue());
+            }
+        });
+
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                threadAutomtique = new Automatique();
+                threadAutomtique.ajouterObservateur(OngletControle.this);
+                threadAutomtique.start();
+                miseAJour();
+            }
+        });
+
+        stop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                threadAutomtique.quitter();
+                threadAutomtique = null;
+                miseAJour();
             }
         });
     }

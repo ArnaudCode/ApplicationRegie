@@ -120,7 +120,7 @@ public class ModuleLocalisation extends Module {
     }
 
     public static void stopLocalisation() {
-        /* Demande a l'appli localisation d'arreter la localisation */
+        /* Demande à l'application localisation d'arrêter la localisation */
         JSONObject stop = new JSONObject();
         stop.put("action", "stop");
         try {
@@ -133,7 +133,7 @@ public class ModuleLocalisation extends Module {
     }
 
     public static boolean estConnecte() {
-        /* Retourn true si l'application localisation a été lancée */
+        /* Retourne true si l'application localisation a été lancée */
         if (socket == null) {
             return false;
         } else {

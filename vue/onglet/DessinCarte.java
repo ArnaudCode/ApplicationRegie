@@ -58,7 +58,7 @@ public class DessinCarte extends JPanel {
             }
         }
 
-        if (!ListeRobot.getListe().isEmpty()) {
+        if (!ListeRobot.getListe().isEmpty() && !listePosition.isEmpty()) {
             for (Robot robot : ListeRobot.getListe()) {
                 Position pos_precedent = null;
                 for (Position position : listePosition.get(robot.getNumero())) {
