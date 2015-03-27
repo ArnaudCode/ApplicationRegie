@@ -73,6 +73,13 @@ Projet Tutoré IUT 2014-2015
 {
   "idModule": "public",
   "detail": {
+    "action": "photo"
+  }
+}
+
+{
+  "idModule": "public",
+  "detail": {
     "action": "fin"
   }
 }
