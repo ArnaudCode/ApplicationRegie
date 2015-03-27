@@ -1,12 +1,19 @@
 package modele.module;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.imageio.ImageIO;
 import modele.applicationpublic.ListePublic;
 import modele.applicationpublic.Public;
 import modele.robot.ListeRobot;
 import modele.serveur.Emission;
 import org.json.JSONObject;
 import vue.Erreur;
+import vue.onglet.OngletEcran;
 
 /**
  *
@@ -47,23 +54,46 @@ public class ModulePublic extends Module {
             JSONObject detail = json.getJSONObject("detail");
 
             String action = detail.getString("action");
+            switch(action)
+            {
+                case "fin":
+                case "refuser":
+                    ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
+                    ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
 
-            if (action.equals("fin") || action.equals("refuser")) {
-                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setAttente(true);
-                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).setControle(false);
+                    libererRobot();
 
-                libererRobot();
+                    /* Emision */
+                    ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).envoieSecondes();
+                    break;
+                case "photo":
+                    BufferedImage img = OngletEcran.screenshot();
+                    if(img == null)
+                        break;
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy");
+                    String path = "captures/"+format.format(new Date())+"/";
+                    File folder = new File(path);
+                    if(!folder.exists())
+                        folder.mkdirs();
+                    String[] files = folder.list();
+                    try
+                    {
+                        File file = new File(path+files.length+".jpg");
+                        ImageIO.write(img, "jpg", file);
+                    }
+                    catch(Exception ex)
+                    {
+                        ex.printStackTrace();
+                    }
+                    break;
+                default:
+                    String vitesse = String.valueOf(detail.optInt("vitesse"));
 
-                /* Emision */
-                ListePublic.getListe().get(ListePublic.getListe().indexOf(applicationpublic)).envoieSecondes();
-            } else {
-                String vitesse = String.valueOf(detail.optInt("vitesse"));
+                    JSONObject emission = new JSONObject();
+                    emission.put("action", action);
+                    emission.put("vitesse", vitesse);
 
-                JSONObject emission = new JSONObject();
-                emission.put("action", action);
-                emission.put("vitesse", vitesse);
-
-                new Emission(ListeRobot.getListe().get(0).getSocket(), emission.toString()); //Robot ecrit en dur !
+                    new Emission(ListeRobot.getListe().get(0).getSocket(), emission.toString()); //Robot ecrit en dur !
             }
         } catch (Exception e) {
             e.printStackTrace();

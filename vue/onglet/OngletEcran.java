@@ -9,6 +9,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,9 +27,10 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
  */
 public class OngletEcran extends JPanel
 {
-
+    private static String[] IPs = {"http://192.168.1.5:8080/", "http://192.168.1.4:8080/"};
     private String description = null;
     private FullScreenVideoFrame projFrame;
+    protected static String screenshotURL;
 
     public OngletEcran()
     {
@@ -71,6 +76,7 @@ public class OngletEcran extends JPanel
             public void actionPerformed(ActionEvent e)
             {
                 projFrame.stop();
+                screenshotURL = null;
             }
         });
         gbc.gridy++;
@@ -78,23 +84,43 @@ public class OngletEcran extends JPanel
         
         gbc.gridwidth = 1;
         gbc.gridy++;
-        this.add(new EcranPanel("http://192.168.1.5:8080/?action=stream", "Rasp 1", projFrame), gbc);
+        this.add(new EcranPanel(0, "Rasp 1", projFrame), gbc);
         gbc.gridx++;
         gbc.insets = new Insets(0, 10, 0, 0);
-        this.add(new EcranPanel("http://192.168.1.4:8080/?action=stream", "Rasp 1", projFrame), gbc);
+        this.add(new EcranPanel(1, "Rasp 1", projFrame), gbc);
 
+    }
+    
+    public static BufferedImage screenshot()
+    {
+        BufferedImage ret = null;
+        if(screenshotURL != null)
+        {
+            try
+            {
+                URL url = new URL(screenshotURL);
+                ret = ImageIO.read(url);
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+                ret = null;
+            }
+        }
+        return ret;
     }
 
     public class EcranPanel extends JPanel
     {
 
-        private String stream, title;
+        private String title;
+        private int stream;
         private EmbeddedMediaPlayer player;
         private FullScreenVideoFrame projFrame;
 
         private JButton start, stop, proj;
 
-        protected EcranPanel(String stream, String title, FullScreenVideoFrame frame)
+        protected EcranPanel(int stream, String title, FullScreenVideoFrame frame)
         {
             super();
             this.stream = stream;
@@ -163,7 +189,8 @@ public class OngletEcran extends JPanel
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    projFrame.playStream(stream);
+                    projFrame.playStream(IPs[stream]+"?action=stream");
+                    screenshotURL = IPs[stream]+"?action=snapshot";
                 }
             });
             
@@ -177,7 +204,7 @@ public class OngletEcran extends JPanel
         private void play()
         {
             player.stop();
-            player.playMedia(stream);
+            player.playMedia(IPs[0]+"?action=stream");
         }
         
         /**
