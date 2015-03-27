@@ -12,9 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import modele.Parametre;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.DefaultAdaptiveRuntimeFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -53,9 +51,8 @@ public class OngletEcran extends JPanel
 
         /* Placement des composants */
         this.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints(),
-                ecrangbc = new GridBagConstraints();
-
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = 2;
         gbc.gridx = 0;
         gbc.gridy = 0;
         this.add(titre, gbc);
@@ -65,11 +62,26 @@ public class OngletEcran extends JPanel
 
         gbc.gridy++;
         gbc.gridx = 0;
+        
+        JButton stopProj = new JButton("Arrêter la projection");
+        stopProj.addActionListener(new ActionListener()
+        {
 
-        this.add(new EcranPanel("http://192.168.1.5:12345", "Rasp 1", projFrame), gbc);
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                projFrame.stop();
+            }
+        });
+        gbc.gridy++;
+        this.add(stopProj, gbc);
+        
+        gbc.gridwidth = 1;
+        gbc.gridy++;
+        this.add(new EcranPanel("http://192.168.1.5:8080/?action=stream", "Rasp 1", projFrame), gbc);
         gbc.gridx++;
         gbc.insets = new Insets(0, 10, 0, 0);
-        this.add(new EcranPanel("http://192.168.1.4:12345", "Rasp 1", projFrame), gbc);
+        this.add(new EcranPanel("http://192.168.1.4:8080/?action=stream", "Rasp 1", projFrame), gbc);
 
     }
 
@@ -80,7 +92,7 @@ public class OngletEcran extends JPanel
         private EmbeddedMediaPlayer player;
         private FullScreenVideoFrame projFrame;
 
-        private JButton start, stop, proj, stopProj;
+        private JButton start, stop, proj;
 
         protected EcranPanel(String stream, String title, FullScreenVideoFrame frame)
         {
@@ -103,7 +115,7 @@ public class OngletEcran extends JPanel
 
             cst.gridy++;
             cst.fill = GridBagConstraints.BOTH;
-            cst.gridwidth = 4;
+            cst.gridwidth = 3;
             EmbeddedMediaPlayerComponent mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
             mediaPlayerComponent.setPreferredSize(new Dimension(480, 270));
             this.player = mediaPlayerComponent.getMediaPlayer();
@@ -117,9 +129,6 @@ public class OngletEcran extends JPanel
             stop.setEnabled(false);
             
             proj = new JButton("Projeter");
-            proj.setEnabled(false);
-            stopProj = new JButton("Arrêter projection");
-            stopProj.setEnabled(false);
             
             start.addActionListener(new ActionListener()
             {
@@ -130,7 +139,6 @@ public class OngletEcran extends JPanel
                     play();
                     start.setEnabled(false);
                     stop.setEnabled(true);
-                    proj.setEnabled(true);
                 }
             });
             this.add(start, cst);
@@ -142,11 +150,8 @@ public class OngletEcran extends JPanel
                 public void actionPerformed(ActionEvent e)
                 {
                     stop();
-                    stopProj();
                     stop.setEnabled(false);
                     start.setEnabled(true);
-                    proj.setEnabled(false);
-                    stopProj.setEnabled(false);
                 }
             });
             cst.gridx++;
@@ -158,28 +163,12 @@ public class OngletEcran extends JPanel
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    stopProj.setEnabled(true);
-                    proj();
+                    projFrame.playStream(stream);
                 }
             });
             
             cst.gridx++;
             this.add(proj, cst);
-            
-            stopProj.addActionListener(new ActionListener()
-            {
-
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    stopProj();
-                    stopProj.setEnabled(false);
-                }
-            });
-            
-            cst.gridx++;
-            this.add(stopProj, cst);
-
         }
         
         /**
@@ -187,8 +176,8 @@ public class OngletEcran extends JPanel
          */
         private void play()
         {
+            player.stop();
             player.playMedia(stream);
-            this.revalidate();
         }
         
         /**
@@ -197,22 +186,6 @@ public class OngletEcran extends JPanel
         private void stop()
         {
             player.stop();
-        }
-        
-        /**
-         * Projette le stream.
-         */
-        private void proj()
-        {
-            this.projFrame.playStream(stream);
-        }
-        
-        /**
-         * Arrête la projection.
-         */
-        private void stopProj()
-        {
-            this.projFrame.stop();
         }
     }
 
@@ -243,6 +216,7 @@ public class OngletEcran extends JPanel
         
         public void playStream(String stream)
         {
+            player.stop();
             this.player.playMedia(stream);
         }
         
