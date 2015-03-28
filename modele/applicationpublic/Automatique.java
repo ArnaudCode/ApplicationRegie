@@ -1,6 +1,7 @@
 package modele.applicationpublic;
 
 import java.util.ArrayList;
+import modele.robot.ListeRobot;
 import vue.Observateur;
 
 /**
@@ -23,7 +24,7 @@ public class Automatique extends Thread {
         while (!fin) {
 
             if (ListePublic.getListe() != null && !ListePublic.getListe().isEmpty()) { //Si la liste n'est pas vide
-                if (ListePublic.getListe().get(0).isAttente() && !ListePublic.getListe().get(0).isControle()) { //Si le premier public de la liste ne controle pas déjà, alors on lui donne le controle
+                if (ListePublic.getListe().get(0).isAttente() && !ListePublic.getListe().get(0).isControle() && ListeRobot.getListe().get(0).getAdresseIpPublic().isEmpty()) { //Si le premier public de la liste ne controle pas déjà, alors on lui donne le controle
                     ListePublic.getListe().get(0).setAttente(!ListePublic.getListe().get(0).isAttente());
                     ListePublic.getListe().get(0).setControle(!ListePublic.getListe().get(0).isControle());
                     if (ListePublic.getListe().get(0).envoieSecondes()) {
